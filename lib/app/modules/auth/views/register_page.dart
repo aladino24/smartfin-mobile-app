@@ -12,6 +12,7 @@ class RegisterPage extends GetView<RegisterController> {
 
     final ThemeController themeController =
         Get.find<ThemeController>();
+    final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -176,269 +177,280 @@ class RegisterPage extends GetView<RegisterController> {
                         ),
                       ],
                     ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // =========================
-                        // LOGO
-                        // =========================
-
-                        Container(
-                          width: 85,
-                          height: 85,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [
-                                accentGold,
-                                Color(0xFFF4E2A1),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // =========================
+                          // LOGO
+                          // =========================
+                      
+                          Container(
+                            width: 85,
+                            height: 85,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [
+                                  accentGold,
+                                  Color(0xFFF4E2A1),
+                                ],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: accentGold.withOpacity(0.35),
+                                  blurRadius: 25,
+                                  spreadRadius: 2,
+                                ),
                               ],
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: accentGold.withOpacity(0.35),
-                                blurRadius: 25,
-                                spreadRadius: 2,
-                              ),
-                            ],
+                            child: Icon(
+                              Icons.person_add_alt_1_rounded,
+                              size: 42,
+                              color:
+                                  isDark
+                                      ? primaryBg
+                                      : const Color(0xFF1E293B),
+                            ),
                           ),
-                          child: Icon(
-                            Icons.person_add_alt_1_rounded,
-                            size: 42,
-                            color:
-                                isDark
-                                    ? primaryBg
-                                    : const Color(0xFF1E293B),
-                          ),
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        Text(
-                          "Create Account",
-                          style: TextStyle(
-                            color: textPrimary,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.1,
-                          ),
-                        ),
-
-                        const SizedBox(height: 8),
-
-                        Text(
-                          "Join SmartFin Financial Platform",
-                          style: TextStyle(
-                            color: textSecondary,
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        const SizedBox(height: 34),
-
-                        // =========================
-                        // FULL NAME
-                        // =========================
-
-                        buildInput(
-                          hint: "Full Name",
-                          icon: Icons.person_outline,
-                          textPrimary: textPrimary,
-                          isDark: isDark,
-                          onChanged: (v) =>
-                              controller.fullName.value = v,
-                        ),
-
-                        const SizedBox(height: 18),
-
-                        // =========================
-                        // EMAIL
-                        // =========================
-
-                        buildInput(
-                          hint: "Email atau Username",
-                          icon: Icons.email_outlined,
-                          textPrimary: textPrimary,
-                          isDark: isDark,
-                          keyboardType:
-                              TextInputType.emailAddress,
-                          onChanged: (v) =>
-                              controller.email.value = v,
-                        ),
-
-                        const SizedBox(height: 18),
-
-                        // =========================
-                        // PHONE
-                        // =========================
-
-                        buildInput(
-                          hint: "Phone Number",
-                          icon: Icons.phone_outlined,
-                          textPrimary: textPrimary,
-                          isDark: isDark,
-                          keyboardType: TextInputType.phone,
-                          onChanged: (v) =>
-                              controller.phone.value = v,
-                        ),
-
-                        const SizedBox(height: 18),
-
-                        // =========================
-                        // PASSWORD
-                        // =========================
-
-                        Obx(
-                          () => TextField(
-                            obscureText:
-                                controller
-                                    .obscurePassword.value,
-                            onChanged: (v) =>
-                                controller.password.value = v,
+                      
+                          const SizedBox(height: 24),
+                      
+                          Text(
+                            "Create Account",
                             style: TextStyle(
                               color: textPrimary,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.1,
                             ),
-                            decoration: inputDecoration(
-                              hint: "Password",
-                              icon: Icons.lock_outline,
-                              isDark: isDark,
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  controller
-                                          .obscurePassword
-                                          .value
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color:
-                                      isDark
+                          ),
+                      
+                          const SizedBox(height: 8),
+                      
+                          Text(
+                            "Join SmartFin Financial Platform",
+                            style: TextStyle(
+                              color: textSecondary,
+                              fontSize: 14,
+                            ),
+                          ),
+                      
+                          const SizedBox(height: 34),
+                      
+                          // =========================
+                          // FULL NAME
+                          // =========================
+                      
+                          buildInput(
+                            hint: "Full Name",
+                            icon: Icons.person_outline,
+                            textPrimary: textPrimary,
+                            isDark: isDark,
+                            onChanged: (v) =>
+                                controller.fullName.value = v,
+                          ),
+                      
+                          const SizedBox(height: 18),
+                      
+                          // =========================
+                          // EMAIL
+                          // =========================
+                      
+                          buildInput(
+                            hint: "Email atau Username",
+                            icon: Icons.email_outlined,
+                            textPrimary: textPrimary,
+                            isDark: isDark,
+                            keyboardType:
+                                TextInputType.emailAddress,
+                            onChanged: (v) =>
+                                controller.email.value = v,
+                          ),
+                      
+                          const SizedBox(height: 18),
+                      
+                          // =========================
+                          // PHONE
+                          // =========================
+                      
+                          buildInput(
+                            hint: "Phone Number",
+                            icon: Icons.phone_outlined,
+                            textPrimary: textPrimary,
+                            isDark: isDark,
+                            keyboardType: TextInputType.phone,
+                            onChanged: (v) =>
+                                controller.phone.value = v,
+                          ),
+                      
+                          const SizedBox(height: 18),
+                      
+                          // =========================
+                          // PASSWORD
+                          // =========================
+                      
+                          Obx(
+                              () => TextFormField(
+                                obscureText: controller.obscurePassword.value,
+                                onChanged: (v) => controller.password.value = v,
+                                style: TextStyle(
+                                  color: textPrimary,
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.trim().isEmpty) {
+                                    return "Password wajib diisi";
+                                  }
+
+                                  if (value.length < 6) {
+                                    return "Password minimal 6 karakter";
+                                  }
+
+                                  return null;
+                                },
+                                decoration: inputDecoration(
+                                  hint: "Password",
+                                  icon: Icons.lock_outline,
+                                  isDark: isDark,
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      controller.obscurePassword.value
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: isDark
                                           ? Colors.white54
                                           : Colors.black45,
-                                ),
-                                onPressed:
-                                    controller.togglePassword,
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        const SizedBox(height: 32),
-
-                        // =========================
-                        // REGISTER BUTTON
-                        // =========================
-
-                        Obx(
-                          () => SizedBox(
-                            width: double.infinity,
-                            height: 56,
-                            child: ElevatedButton(
-                              onPressed:
-                                  controller
-                                          .isLoading
-                                          .value
-                                      ? null
-                                      : controller.register,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    accentGold,
-                                foregroundColor:
-                                    const Color(0xFF08111F),
-                                elevation: 10,
-                                shadowColor: accentGold
-                                    .withOpacity(0.5),
-                                shape:
-                                    RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            16,
-                                          ),
                                     ),
-                              ),
-                              child:
-                                  controller.isLoading.value
-                                      ? const SizedBox(
-                                        width: 22,
-                                        height: 22,
-                                        child:
-                                            CircularProgressIndicator(
-                                              strokeWidth:
-                                                  2.5,
-                                              color: Color(
-                                                0xFF08111F,
-                                              ),
-                                            ),
-                                      )
-                                      : const Text(
-                                        "REGISTER",
-                                        style: TextStyle(
-                                          fontWeight:
-                                              FontWeight.bold,
-                                          fontSize: 16,
-                                          letterSpacing:
-                                              1,
-                                        ),
-                                      ),
-                            ),
-                          ),
-                        ),
-
-                        const SizedBox(height: 22),
-
-                        // =========================
-                        // LOGIN CTA
-                        // =========================
-
-                        Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Sudah memiliki akun?",
-                              style: TextStyle(
-                                color:
-                                    isDark
-                                        ? Colors.white70
-                                        : Colors.black54,
-                                fontSize: 13,
-                              ),
-                            ),
-
-                            const SizedBox(width: 6),
-
-                            InkWell(
-                              borderRadius:
-                                  BorderRadius.circular(10),
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 5,
-                                    ),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        10,
-                                      ),
-                                  color: accentGold
-                                      .withOpacity(0.12),
-                                ),
-                                child: const Text(
-                                  "Login",
-                                  style: TextStyle(
-                                    color: accentGold,
-                                    fontWeight:
-                                        FontWeight.bold,
-                                    fontSize: 13,
+                                    onPressed: controller.togglePassword,
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ],
+                      
+                          const SizedBox(height: 32),
+                      
+                          // =========================
+                          // REGISTER BUTTON
+                          // =========================
+                      
+                          Obx(
+                            () => SizedBox(
+                              width: double.infinity,
+                              height: 56,
+                              child: ElevatedButton(
+                                onPressed:
+                                    controller
+                                            .isLoading
+                                            .value
+                                        ? null
+                                        : () {
+                                  if (formKey.currentState!.validate()) {
+                                    controller.register();
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      accentGold,
+                                  foregroundColor:
+                                      const Color(0xFF08111F),
+                                  elevation: 10,
+                                  shadowColor: accentGold
+                                      .withOpacity(0.5),
+                                  shape:
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(
+                                              16,
+                                            ),
+                                      ),
+                                ),
+                                child:
+                                    controller.isLoading.value
+                                        ? const SizedBox(
+                                          width: 22,
+                                          height: 22,
+                                          child:
+                                              CircularProgressIndicator(
+                                                strokeWidth:
+                                                    2.5,
+                                                color: Color(
+                                                  0xFF08111F,
+                                                ),
+                                              ),
+                                        )
+                                        : const Text(
+                                          "REGISTER",
+                                          style: TextStyle(
+                                            fontWeight:
+                                                FontWeight.bold,
+                                            fontSize: 16,
+                                            letterSpacing:
+                                                1,
+                                          ),
+                                        ),
+                              ),
+                            ),
+                          ),
+                      
+                          const SizedBox(height: 22),
+                      
+                          // =========================
+                          // LOGIN CTA
+                          // =========================
+                      
+                          Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Sudah memiliki akun?",
+                                style: TextStyle(
+                                  color:
+                                      isDark
+                                          ? Colors.white70
+                                          : Colors.black54,
+                                  fontSize: 13,
+                                ),
+                              ),
+                      
+                              const SizedBox(width: 6),
+                      
+                              InkWell(
+                                borderRadius:
+                                    BorderRadius.circular(10),
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 5,
+                                      ),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(
+                                          10,
+                                        ),
+                                    color: accentGold
+                                        .withOpacity(0.12),
+                                  ),
+                                  child: const Text(
+                                    "Login",
+                                    style: TextStyle(
+                                      color: accentGold,
+                                      fontWeight:
+                                          FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -539,12 +551,18 @@ class RegisterPage extends GetView<RegisterController> {
     required Color textPrimary,
     TextInputType keyboardType = TextInputType.text,
   }) {
-    return TextField(
+    return TextFormField(
       keyboardType: keyboardType,
       onChanged: onChanged,
       style: TextStyle(
         color: textPrimary,
       ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return "Field ini tidak boleh kosong";
+        }
+        return null;
+      },
       decoration: inputDecoration(
         hint: hint,
         icon: icon,

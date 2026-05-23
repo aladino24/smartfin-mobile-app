@@ -7,6 +7,7 @@ import '../modules/auth/views/login_page.dart';
 import '../modules/auth/views/register_page.dart';
 import '../modules/dashboard/views/dashboard_page.dart';
 import '../modules/main/views/main_page.dart';
+import '../modules/transaction/view/income_transaction_page.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -34,6 +35,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.about,
       page: () => AboutPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.incomeTransaction,
+      page: () => IncomeTransactionPage(),
     ),
   ];
 }

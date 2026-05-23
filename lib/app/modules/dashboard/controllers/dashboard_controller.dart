@@ -82,7 +82,7 @@ class DashboardController extends GetxController {
   // =====================================================
   Future<void> refreshDashboardData() async {
     await getUser();
-
+    await getTransactions();
   }
 
   //transaction

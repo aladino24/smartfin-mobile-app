@@ -826,22 +826,31 @@ class _QuickAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.08),
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.white.withOpacity(0.12)),
+    return InkWell(
+      onTap: () {
+          if (label == "Income") {
+              Get.toNamed('/income-transaction');
+            } else {
+              // Implementasi untuk Expense, Invest, Scan jika diperlukan
+            }
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.08),
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white.withOpacity(0.12)),
+            ),
+            child: Icon(icon, color: const Color(0xFFD4AF37)),
           ),
-          child: Icon(icon, color: const Color(0xFFD4AF37)),
-        ),
-        const SizedBox(height: 8),
-        Text(label, style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w500))
-      ],
-
+          const SizedBox(height: 8),
+          Text(label, style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w500))
+        ],
+      
+      ),
     );
 
   }

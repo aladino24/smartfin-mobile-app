@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:smartfin_mobile_app/app/bindings/initial_bindings.dart';
 
 import 'app/config/http_override.dart';
 import 'app/modules/auth/views/theme_controller.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
     );
 
     return GetMaterialApp(
+      initialBinding: InitialBinding(),
       debugShowCheckedModeBanner: false,
       title: 'SmartFin',
 
