@@ -4,6 +4,7 @@ import 'package:smartfin_mobile_app/app/modules/dashboard/views/dashboard_page.d
 
 import '../../../controllers/main_navigation_controller.dart';
 import '../../../widgets/custom_bottom_navbar.dart';
+import '../../setting/views/setting_page.dart';
 
 
 class MainPage extends StatelessWidget {
@@ -52,7 +53,7 @@ class MainPage extends StatelessWidget {
           // SETTING PAGE
           // =========================
 
-          SettingPage(),
+          SettingsPage(),
         ],
       ),
 
@@ -133,19 +134,19 @@ class AIPage extends StatelessWidget {
 // SETTING PAGE
 // =====================================================
 
-class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
+// class SettingPage extends StatelessWidget {
+//   const SettingPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Setting Page",
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(
+//       child: Text(
+//         "Setting Page",
+//         style: TextStyle(
+//           fontSize: 24,
+//           fontWeight: FontWeight.bold,
+//         ),
+//       ),
+//     );
+//   }
+// }

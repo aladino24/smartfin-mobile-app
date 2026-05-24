@@ -542,21 +542,119 @@ class DashboardPage extends StatelessWidget {
 
   // =====================================================
 
-  Widget _buildTransactions() {
-    return _sectionCard(
-      title: "Recent Transactions",
-      child: Column(
-        children: const [
-          _Transaction("Starbucks Coffee", "-50.000", "Today, 08:30 AM", Icons.coffee_rounded, Color(0xFFE71D36)),
-          _Transaction("Monthly Salary", "+10.000.000", "Yesterday, 21:00 PM", Icons.wallet_membership_rounded, Color(0xFF2EC4B6)),
-          _Transaction("Tokopedia Purchase", "-250.000", "22 May 2026", Icons.shopping_bag_rounded, Color(0xFFE71D36)),
-        ],
-      ),
+Widget _buildTransactions() {
+  final controller = Get.find<DashboardController>();
 
-    );
+  return _sectionCard(
+    title: "Recent Transactions",
+    child: Obx(() {
+      if (controller.isLoadingTransaction.value) {
+        return const Center(child: CircularProgressIndicator());
+      }
 
-  }
+      if (controller.transactions.isEmpty) {
+        return const Text("No transactions found");
+      }
 
+      return Column(
+        children: controller.transactions.take(5).map((tx) {
+          final isIncome = tx.transactionType == "income";
+
+          final amountText = isIncome
+              ? "+ ${controller.formatRupiah(tx.amount)}"
+              : "- ${controller.formatRupiah(tx.amount)}";
+
+          final mainColor = isIncome
+              ? const Color(0xFF2EC4B6)
+              : const Color(0xFFE71D36);
+
+          final bgColor = isIncome
+              ? const Color(0xFF2EC4B6).withOpacity(0.12)
+              : const Color(0xFFE71D36).withOpacity(0.12);
+
+          /// 🎯 ICON
+          final icon = isIncome
+              ? Icons.trending_up_rounded
+              : Icons.trending_down_rounded;
+
+          return Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 12,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                /// ICON CIRCLE
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: bgColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    icon,
+                    color: mainColor,
+                    size: 22,
+                  ),
+                ),
+
+                const SizedBox(width: 12),
+
+                /// TITLE + DATE
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        tx.title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        DateFormat('dd MMM yyyy')
+                            .format(tx.transactionDate),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                /// AMOUNT
+                Text(
+                  amountText,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                    color: mainColor,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      );
+    }),
+  );
+}
 
 
   // =====================================================
@@ -865,7 +963,6 @@ class _BudgetItemState extends State<_BudgetItem> with SingleTickerProviderState
   }
 
 }
-
 
 
 class _Transaction extends StatelessWidget {

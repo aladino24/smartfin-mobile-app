@@ -6,10 +6,13 @@ import '../../../data/models/user_model.dart';
 import '../../../services/api_service.dart';
 import '../../../services/storage_service.dart';
 import '../../../widgets/custom_dialog.dart';
+import '../../transaction/model/transaction_model.dart';
 
 class DashboardController extends GetxController {
    final ApiService api = ApiService();
   final StorageService storage = StorageService();
+  var isLoadingTransaction = false.obs;
+  var transactions = <TransactionModel>[].obs;
 
   // =========================
   // USER STATE
@@ -21,7 +24,15 @@ class DashboardController extends GetxController {
   void onInit() {
     super.onInit();
     getUser();
+    getTransactions();
   }
+
+  String formatRupiah(int amount) {
+  return "Rp ${amount.toString().replaceAllMapped(
+    RegExp(r'(\d)(?=(\d{3})+(?!\d))'),
+    (match) => '${match[1]}.',
+  )}";
+}
 
   // =====================================================
   // GET USER (USING MODEL)
@@ -46,9 +57,6 @@ class DashboardController extends GetxController {
 
       final decoded = jsonDecode(response.body);
 
-      print("Response Get User: $decoded");
-
-
       final model = UserModel.fromJson(decoded);
       final dataUser = UserData.fromJson(decoded['data']);
 
@@ -67,6 +75,7 @@ class DashboardController extends GetxController {
       isLoadingUser.value = false;
     }
   }
+  
 
   // =====================================================
   // REFRESH DASHBOARD
@@ -74,6 +83,34 @@ class DashboardController extends GetxController {
   Future<void> refreshDashboardData() async {
     await getUser();
 
+  }
+
+  //transaction
+  Future<void> getTransactions() async {
+    try {
+      isLoadingTransaction.value = true;
+
+      final token = storage.getToken();
+
+      if (token == null) {
+        Get.offAllNamed('/login');
+        return;
+      }
+
+      final res = await api.getTransactions(token);
+
+      final model = TransactionResponse.fromJson(res);
+
+      transactions.value = model.data.transactions;
+
+    } catch (e) {
+      CustomDialog.error(
+        title: "Ambil Data Transaksi Gagal",
+        message: e.toString(),
+      );
+    } finally {
+      isLoadingTransaction.value = false;
+    }
   }
 
   // =====================================================

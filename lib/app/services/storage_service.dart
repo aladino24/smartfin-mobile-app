@@ -14,4 +14,8 @@ class StorageService {
   void clear() {
     box.erase();
   }
+
+    Future<void> clearAll() async {
+      await box.erase(); // ini hapus semua data lokal
+    }
 }
