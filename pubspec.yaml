@@ -43,6 +43,7 @@ dependencies:
   fl_chart: ^1.2.0
   speech_to_text: ^7.4.0
   permission_handler: ^12.0.1
+  showcaseview: ^5.0.2
 
 dev_dependencies:
   flutter_test:

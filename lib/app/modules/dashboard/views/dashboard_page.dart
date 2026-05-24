@@ -1,18 +1,29 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:showcaseview/showcaseview.dart';
 import '../controllers/dashboard_controller.dart';
 import '../widgets/notification_panel.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
 
   DashboardPage({super.key});
 
-  final DashboardController controller = Get.put(DashboardController());
-
   @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  final DashboardController controller = Get.put(DashboardController());
+   final box = GetStorage();
+  final GlobalKey incomeKey = GlobalKey();
+  final GlobalKey expenseKey = GlobalKey();
+  final GlobalKey investKey = GlobalKey();
+  final GlobalKey scanKey = GlobalKey();
+
 
   Widget build(BuildContext context) {
     final now = DateTime.now();
@@ -22,7 +33,35 @@ class DashboardPage extends StatelessWidget {
     const Color accentGold = Color(0xFFD4AF37);
     const Color bgLight = Color(0xFFF8FAFC);
 
-    return Scaffold(
+    return ShowCaseWidget(
+      blurValue: 1,
+      autoPlay: false,
+      builder: (showcaseContext) {
+           WidgetsBinding.instance
+            .addPostFrameCallback((_) {
+
+          final alreadyShow =
+              box.read('dashboard_showcase') ??
+                  false;
+
+          if (!alreadyShow) {
+
+            ShowCaseWidget.of(
+              showcaseContext,
+            ).startShowCase([
+              incomeKey,
+              expenseKey,
+              investKey,
+              scanKey,
+            ]);
+
+            box.write(
+              'dashboard_showcase',
+              true,
+            );
+          }
+        });
+      return Scaffold(
       backgroundColor: bgLight,
       body: SafeArea(
         child: RefreshIndicator(
@@ -91,17 +130,13 @@ class DashboardPage extends StatelessWidget {
       ),
 
     );
-
+    
+      }
+    
+    );
   }
 
-
-
   // =====================================================
-
-  // 1. HEADER
-
-  // =====================================================
-
   Widget _buildHeader(BuildContext context, String date) { // <-- Tambah BuildContext di parameter
     return Obx(() => Row(
       children: [
@@ -192,13 +227,7 @@ class DashboardPage extends StatelessWidget {
 
   }
 
-
   // =====================================================
-
-  // 2. BALANCE CARD (Ditambah Mini Line Chart Terintegrasi)
-
-  // =====================================================
-
   Widget _buildBalanceCard(Color gold) {
     return Container(
       padding: const EdgeInsets.all(22),
@@ -284,13 +313,53 @@ class DashboardPage extends StatelessWidget {
           const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            _QuickAction(icon: Icons.add_rounded, label: "Income"),
-            _QuickAction(icon: Icons.remove_rounded, label: "Expense"),
-            _QuickAction(icon: Icons.trending_up_rounded, label: "Invest"), 
-            _QuickAction(icon: Icons.qr_code_scanner_rounded, label: "Scan"),
+          children: [
+
+            Showcase(
+              key: incomeKey,
+              title: "Income Transaction",
+              description:
+                  "Catat pemasukan menggunakan AI Voice Assistant.",
+              child: const _QuickAction(
+                icon: Icons.add_rounded,
+                label: "Income",
+              ),
+            ),
+
+            Showcase(
+              key: expenseKey,
+              title: "Expense Transaction",
+              description:
+                  "Kelola pengeluaran harian dengan mudah.",
+              child: const _QuickAction(
+                icon: Icons.remove_rounded,
+                label: "Expense",
+              ),
+            ),
+
+            Showcase(
+              key: investKey,
+              title: "Investment",
+              description:
+                  "Pantau investasi dan perkembangan aset.",
+              child: const _QuickAction(
+                icon: Icons.trending_up_rounded,
+                label: "Invest",
+              ),
+            ),
+
+            Showcase(
+              key: scanKey,
+              title: "Smart Scan",
+              description:
+                  "Scan struk transaksi otomatis menggunakan AI.",
+              child: const _QuickAction(
+                icon: Icons.qr_code_scanner_rounded,
+                label: "Scan",
+              ),
+            ),
           ],
-        ),
+        )
         ],
       ),
 
@@ -298,14 +367,7 @@ class DashboardPage extends StatelessWidget {
 
   }
 
-
-
   // =====================================================
-
-  // 3. INCOME VS EXPENSE (Berdampingan Modern)
-
-  // =====================================================
-
     Widget _buildIncomeExpense() {
 
     return Row(
@@ -338,10 +400,6 @@ class DashboardPage extends StatelessWidget {
     );
 
   }
-
-
-
-
 
   Widget _modernStatTile({
     required String title,
@@ -408,14 +466,7 @@ class DashboardPage extends StatelessWidget {
 
   }
 
-
-
   // =====================================================
-
-  // 4. WALLET SUMMARY
-
-  // =====================================================
-
   Widget _buildWalletSummary() {
     return _sectionCard(
       title: "Wallet Summary",
@@ -431,14 +482,7 @@ class DashboardPage extends StatelessWidget {
 
   }
 
-
-
   // =====================================================
-
-  // 5. FINANCIAL ANALYTICS (Bar Chart Modern)
-
-  // =====================================================
-
   Widget _buildAnalytics() {
     return _sectionCard(
       title: "Financial Analytics",
@@ -499,7 +543,6 @@ class DashboardPage extends StatelessWidget {
 
   }
 
-
   BarChartGroupData _makeBarGroup(int x, double y1, double y2) {
     return BarChartGroupData(
       barsSpace: 4,
@@ -511,14 +554,7 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-
-
   // =====================================================
-
-  // 6. BUDGET PROGRESS (Pie Matrix Visualisasi Custom)
-
-  // =====================================================
-
   Widget _buildBudget() {
     return _sectionCard(
       title: "Budget Progress",
@@ -535,13 +571,7 @@ class DashboardPage extends StatelessWidget {
 
   }
 
-
   // =====================================================
-
-  // 7. RECENT TRANSACTIONS (Pewarnaan Dinamis + Garis)
-
-  // =====================================================
-
 Widget _buildTransactions() {
   final controller = Get.find<DashboardController>();
 
@@ -656,13 +686,7 @@ Widget _buildTransactions() {
   );
 }
 
-
   // =====================================================
-
-  // 8. AI INSIGHTS (Desain Futuristik Cyber Glowing)
-
-  // =====================================================
-
   Widget _buildAIInsights() {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -727,14 +751,7 @@ Widget _buildTransactions() {
 
   }
 
-
-
   // =====================================================
-
-  // 9. SMART REMINDER (Desain Glassmorphic Alert)
-
-  // =====================================================
-
   Widget _buildReminder() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -773,14 +790,7 @@ Widget _buildTransactions() {
 
   }
 
-
-
   // =====================================================
-
-  // BASE REUSABLE CARD CONTROLLER
-
-  // =====================================================
-
   Widget _sectionCard({required String title, required Widget child}) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -805,7 +815,6 @@ Widget _buildTransactions() {
     );
 
   }
-
 }
 
 

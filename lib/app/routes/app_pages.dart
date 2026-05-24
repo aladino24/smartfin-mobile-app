@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:smartfin_mobile_app/app/modules/setting/views/about_page.dart';
 import '../modules/auth/bindings/login_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
@@ -27,9 +28,12 @@ class AppPages {
       binding: RegisterBinding(),
     ),
 
-    GetPage(
+   GetPage(
       name: AppRoutes.dashboard,
-      page: () => DashboardPage(),
+      // ignore: deprecated_member_use
+      page: () => ShowCaseWidget(
+        builder: (context) => DashboardPage(),
+      ),
     ),
 
     GetPage(

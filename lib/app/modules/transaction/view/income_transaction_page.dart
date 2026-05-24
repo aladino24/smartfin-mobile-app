@@ -19,7 +19,100 @@ class IncomeTransactionPage
       backgroundColor:
           const Color(0xFFF7F8FC),
 
-      body: SafeArea(
+      appBar: PreferredSize(
+      preferredSize: const Size.fromHeight(90),
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFD4AF37),
+              Color(0xFFB8932F),
+            ],
+          ),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(28),
+            bottomRight: Radius.circular(28),
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 12,
+            ),
+            child: Row(
+              children: [
+                // BACK BUTTON
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    width: 46,
+                    height: 46,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.18),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(width: 16),
+
+                // TITLE
+                const Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Income Transaction",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      SizedBox(height: 4),
+
+                      Text(
+                        "SmartFin AI Voice Assistant",
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // AI ICON
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: const Icon(
+                    Icons.auto_awesome_rounded,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+
+    body: SafeArea(
         child: SingleChildScrollView(
           padding:
               const EdgeInsets.all(20),
@@ -29,77 +122,6 @@ class IncomeTransactionPage
               // ====================================
               // HEADER
               // ====================================
-
-              Row(
-                children: [
-                  Container(
-                    padding:
-                        const EdgeInsets.all(
-                      16,
-                    ),
-
-                    decoration:
-                        BoxDecoration(
-                      gradient:
-                          const LinearGradient(
-                        colors: [
-                          Color(
-                            0xFFD4AF37,
-                          ),
-                          Color(
-                            0xFFB8932F,
-                          ),
-                        ],
-                      ),
-
-                      borderRadius:
-                          BorderRadius.circular(
-                        22,
-                      ),
-                    ),
-
-                    child: const Icon(
-                      Icons
-                          .trending_up_rounded,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                  ),
-
-                  const SizedBox(width: 16),
-
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment
-                              .start,
-
-                      children: [
-                        Text(
-                          "Income Transaction",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight:
-                                FontWeight
-                                    .bold,
-                          ),
-                        ),
-
-                        SizedBox(height: 4),
-
-                        Text(
-                          "SmartFin AI Voice Assistant",
-                          style: TextStyle(
-                            color:
-                                Colors.grey,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
 
               const SizedBox(height: 28),
 
