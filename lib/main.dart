@@ -1,24 +1,64 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'app/config/http_override.dart';
+import 'app/modules/auth/views/theme_controller.dart';
+import 'app/routes/app_pages.dart';
+import 'app/routes/app_routes.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await GetStorage.init();
 
-  runApp(const MyApp());
+  HttpOverrides.global = MyHttpOverrides();
+
+  final box = GetStorage();
+
+  // =========================
+  // CHECK TOKEN
+  // =========================
+
+  final String? token = box.read('token');
+
+  final bool isLoggedIn =
+      token != null && token.isNotEmpty;
+
+  runApp(
+    MyApp(
+      isLoggedIn: isLoggedIn,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+
+  const MyApp({
+    super.key,
+    required this.isLoggedIn,
+  });
 
   @override
   Widget build(BuildContext context) {
+    Get.put(
+      ThemeController(),
+      permanent: true,
+    );
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SmartFin',
-      // initialRoute: AppRoutes.login,
-      // getPages: AppPages.pages,
+
+      initialRoute:
+          isLoggedIn
+              ? AppRoutes.main
+              : AppRoutes.login,
+
+      getPages: AppPages.pages,
     );
   }
 }
