@@ -4,7 +4,9 @@ import 'package:smartfin_mobile_app/app/modules/dashboard/views/dashboard_page.d
 
 import '../../../controllers/main_navigation_controller.dart';
 import '../../../widgets/custom_bottom_navbar.dart';
+import '../../ai/view/ai_page.dart';
 import '../../setting/views/setting_page.dart';
+import '../../wallet/view/wallet_page.dart';
 
 
 class MainPage extends StatelessWidget {
@@ -47,7 +49,7 @@ class MainPage extends StatelessWidget {
           // AI PAGE
           // =========================
 
-          AIPage(),
+          AiPage(),
 
           // =========================
           // SETTING PAGE
@@ -92,43 +94,43 @@ class HomePage extends StatelessWidget {
 // WALLET PAGE
 // =====================================================
 
-class WalletPage extends StatelessWidget {
-  const WalletPage({super.key});
+// class WalletPage extends StatelessWidget {
+//   const WalletPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Wallet Page",
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(
+//       child: Text(
+//         "Wallet Page",
+//         style: TextStyle(
+//           fontSize: 24,
+//           fontWeight: FontWeight.bold,
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 // =====================================================
 // AI PAGE
 // =====================================================
 
-class AIPage extends StatelessWidget {
-  const AIPage({super.key});
+// class AIPage extends StatelessWidget {
+//   const AIPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "AI Smart Assistant",
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(
+//       child: Text(
+//         "AI Smart Assistant",
+//         style: TextStyle(
+//           fontSize: 24,
+//           fontWeight: FontWeight.bold,
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 // =====================================================
 // SETTING PAGE

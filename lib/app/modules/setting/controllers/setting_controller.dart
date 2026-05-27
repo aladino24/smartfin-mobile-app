@@ -28,6 +28,10 @@ class SettingsController extends GetxController {
     isDarkMode.value = !isDarkMode.value;
   }
 
+   Future<void> refreshData() async {
+    await getUser();
+  }
+
   Future<void> logout() async {
     final confirm = await ConfirmDialog.show(
       title: "Logout",

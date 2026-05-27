@@ -10,6 +10,9 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const Color primaryDark = Color(0xFF08111F);
+    const Color accentGold = Color(0xFFD4AF37);
+    const Color bgLight = Color(0xFFF8FAFC);
     return Scaffold(
       backgroundColor: const Color(0xFFF6F7FB),
       appBar: AppBar(
@@ -18,90 +21,98 @@ class SettingsPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-
-          // ================= PROFILE =================
-          _sectionTitle("Account"),
-
-          _profileCard(),
-
-          const SizedBox(height: 16),
-
-          // ================= THEME =================
-          _sectionTitle("Appearance"),
-
-          Obx(() => SwitchListTile(
-                value: controller.isDarkMode.value,
-                onChanged: (val) => controller.toggleTheme(),
-                title: const Text("Dark Mode"),
-                secondary: const Icon(Icons.dark_mode_rounded),
-              )),
-
-          const SizedBox(height: 16),
-
-          // ================= DATA =================
-          _sectionTitle("Data"),
-
-          _tile(
-            icon: Icons.refresh_rounded,
-            title: "Reset User Data",
-            subtitle: "Hapus semua data user dan mulai dari awal",
-            onTap: controller.resetUserData,
-          ),
-
-          _tile(
-            icon: Icons.insert_drive_file_rounded,
-            title: "Documents",
-            subtitle: "File & dokumen aplikasi",
-            onTap: () {},
-          ),
-
-          _tile(
-            icon: Icons.newspaper_rounded,
-            title: "Latest Information",
-            subtitle: "Update & news aplikasi",
-            onTap: () {},
-          ),
-
-          const SizedBox(height: 16),
-
-          // ================= ABOUT =================
-          _sectionTitle("App"),
-
-          _tile(
-            icon: Icons.info_outline_rounded,
-            title: "About App",
-            subtitle: "SmartFin Financial App",
-            onTap: () {
-              Get.toNamed('/about');
-            },
-          ),
-
-          _tile(
-            icon: Icons.verified_rounded,
-            title: "Version",
-            subtitle: "v1.0.0",
-            onTap: () {},
-          ),
-
-          const SizedBox(height: 24),
-
-          // ================= LOGOUT =================
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              padding: const EdgeInsets.all(14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
+      body: RefreshIndicator(
+          color: accentGold, // Warna spinner loader
+          backgroundColor: primaryDark, // Warna background spinner
+          strokeWidth: 2.5,
+        onRefresh: () async {
+          await controller.refreshData();
+        },
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+        
+            // ================= PROFILE =================
+            _sectionTitle("Account"),
+        
+            _profileCard(),
+        
+            const SizedBox(height: 16),
+        
+            // ================= THEME =================
+            _sectionTitle("Appearance"),
+        
+            Obx(() => SwitchListTile(
+                  value: controller.isDarkMode.value,
+                  onChanged: (val) => controller.toggleTheme(),
+                  title: const Text("Dark Mode"),
+                  secondary: const Icon(Icons.dark_mode_rounded),
+                )),
+        
+            const SizedBox(height: 16),
+        
+            // ================= DATA =================
+            _sectionTitle("Data"),
+        
+            _tile(
+              icon: Icons.refresh_rounded,
+              title: "Reset User Data",
+              subtitle: "Hapus semua data user dan mulai dari awal",
+              onTap: controller.resetUserData,
             ),
-            onPressed: controller.logout,
-            icon: const Icon(Icons.logout,color: Colors.white,),
-            label: const Text("Logout", style: TextStyle(color: Colors.white)),
-          ),
-        ],
+        
+            _tile(
+              icon: Icons.insert_drive_file_rounded,
+              title: "Documents",
+              subtitle: "File & dokumen aplikasi",
+              onTap: () {},
+            ),
+        
+            _tile(
+              icon: Icons.newspaper_rounded,
+              title: "Latest Information",
+              subtitle: "Update & news aplikasi",
+              onTap: () {},
+            ),
+        
+            const SizedBox(height: 16),
+        
+            // ================= ABOUT =================
+            _sectionTitle("App"),
+        
+            _tile(
+              icon: Icons.info_outline_rounded,
+              title: "About App",
+              subtitle: "SmartFin Financial App",
+              onTap: () {
+                Get.toNamed('/about');
+              },
+            ),
+        
+            _tile(
+              icon: Icons.verified_rounded,
+              title: "Version",
+              subtitle: "v1.0.0",
+              onTap: () {},
+            ),
+        
+            const SizedBox(height: 24),
+        
+            // ================= LOGOUT =================
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.all(14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+              ),
+              onPressed: controller.logout,
+              icon: const Icon(Icons.logout,color: Colors.white,),
+              label: const Text("Logout", style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -123,7 +134,8 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _profileCard() {
-    return Container(
+  return Obx(
+    () => Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -132,37 +144,51 @@ class SettingsPage extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-          )
+          ),
         ],
       ),
       child: Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 28,
-            backgroundColor: Color(0xFF1E2A44),
-            child: Icon(Icons.person, color: Colors.white),
+            backgroundColor: const Color(0xFF1E2A44),
+            backgroundImage:
+                controller.avatar != null &&
+                        controller.avatar.toString().trim().isNotEmpty
+                    ? NetworkImage(controller.avatar!)
+                    : null,
+            child:
+                controller.avatar == null ||
+                        controller.avatar.toString().trim().isEmpty
+                    ? const Icon(Icons.person, color: Colors.white)
+                    : null,
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(controller.fullName ,
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(height: 4),
-                Text("Tap to update profile",
-                    style: TextStyle(color: Colors.grey)),
+                Text(
+                  controller.fullName,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  "Tap to update profile",
+                  style: TextStyle(color: Colors.grey),
+                ),
               ],
             ),
           ),
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.edit),
-          )
+          ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _tile({
     required IconData icon,
