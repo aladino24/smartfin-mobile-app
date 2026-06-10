@@ -65,7 +65,11 @@ class SettingsPage extends StatelessWidget {
               icon: Icons.insert_drive_file_rounded,
               title: "Documents",
               subtitle: "File & dokumen aplikasi",
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(
+                  '/knowledge'
+                );
+              },
             ),
         
             _tile(
