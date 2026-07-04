@@ -331,7 +331,7 @@ class IncomeTransactionController
         "transaction_type": "income",
         "title": titleController.text,
         "description": descriptionController.text,
-        "amount": int.tryParse(amountController.text) ?? 0,
+        "amount": int.tryParse(amountController.text.replaceAll('.', ''),) ?? 0,
         "transaction_date": DateFormat('yyyy-MM-dd').format(selectedDate.value),
       };
 

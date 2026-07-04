@@ -79,7 +79,12 @@ class ConfirmDialog {
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () => Get.back(result: false),
-                        child: Text(cancelText),
+                        child: Text(
+                          cancelText,
+                          style: TextStyle(
+                            color: Colors.grey.shade700,
+                          ),
+                        ),
                       ),
                     ),
 

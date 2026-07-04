@@ -79,6 +79,8 @@ class WalletPage extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 _walletList(),
+
+                const SizedBox(height: 50),
               ],
             ),
           ),

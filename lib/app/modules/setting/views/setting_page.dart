@@ -83,7 +83,9 @@ class SettingsPage extends StatelessWidget {
               icon: Icons.notifications_active_rounded,
               title: "Reminder",
               subtitle: "Pengaturan pengingat",
-              onTap: () {},
+              onTap: () {
+                Get.toNamed('/reminder');
+              },
             ),
 
             const SizedBox(height: 16),

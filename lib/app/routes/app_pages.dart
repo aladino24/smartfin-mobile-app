@@ -10,7 +10,9 @@ import '../modules/dashboard/views/dashboard_page.dart';
 import '../modules/fileknowledge/binding/knowledge_binding.dart';
 import '../modules/fileknowledge/views/knowlegde_page.dart';
 import '../modules/main/views/main_page.dart';
-import '../modules/transaction/view/income_transaction_page.dart';
+import '../modules/setting/views/reminder_page.dart';
+import '../modules/transaction/views/expense_transaction_page.dart';
+import '../modules/transaction/views/income_transaction_page.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -49,9 +51,19 @@ class AppPages {
     ),
 
     GetPage(
+      name: AppRoutes.expenseTransaction, 
+      page: () => ExpenseTransactionPage(),
+    ),
+
+    GetPage(
         name: AppRoutes.knowledge,
         page: () => KnowledgePage(),
         binding: KnowledgeBinding()
       ),
+
+    GetPage(
+      name: AppRoutes.reminder,
+      page: () => ReminderPage(),
+    ),
   ];
 }

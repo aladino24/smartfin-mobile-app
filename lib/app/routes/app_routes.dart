@@ -5,5 +5,7 @@ class AppRoutes {
   static const dashboard = '/dashboard';
   static const about = '/about';
   static const incomeTransaction = '/income-transaction';
+  static const expenseTransaction = '/expense-transaction';
   static const knowledge = '/knowledge';
+  static const reminder = '/reminder';
 }

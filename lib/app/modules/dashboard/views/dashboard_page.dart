@@ -839,8 +839,10 @@ class _QuickAction extends StatelessWidget {
       onTap: () {
           if (label == "Income") {
               Get.toNamed('/income-transaction');
+            } else if (label == "Expense") {
+              Get.toNamed('/expense-transaction');
             } else {
-              // Implementasi untuk Expense, Invest, Scan jika diperlukan
+              // Implementasi untuk Invest, Scan jika diperlukan
             }
       },
       child: Column(
