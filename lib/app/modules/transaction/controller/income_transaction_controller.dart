@@ -8,6 +8,7 @@ import '../../../services/api_service.dart';
 import '../../../services/storage_service.dart';
 import '../../../widgets/custom_dialog.dart';
 import '../../../widgets/loading_helper.dart';
+import '../../dashboard/controllers/dashboard_controller.dart';
 import '../../master/controllers/category_controller.dart';
 import '../../master/controllers/wallet_controller.dart';
 
@@ -15,6 +16,7 @@ class IncomeTransactionController
     extends GetxController {
   final WalletController walletController = Get.put<WalletController>(WalletController());
   final CategoryController categoryController = Get.put<CategoryController>(CategoryController());
+  final DashboardController dashboardController = Get.put<DashboardController>(DashboardController());
   // =========================
   // SPEECH
   // =========================
@@ -354,6 +356,7 @@ class IncomeTransactionController
 
         // optional reset
         resetForm();
+        dashboardController.refreshDashboardData();
       } else {
         CustomDialog.error(
           title: "Save Failed",

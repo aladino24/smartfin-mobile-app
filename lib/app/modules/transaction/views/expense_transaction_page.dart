@@ -957,7 +957,7 @@ class ExpenseTransactionPage
                                   confirmText: "Simpan",
                                 );
                                 if (confirm) {
-                                  controller.saveTransaction();
+                                  controller.saveTransaction('expense');
                                 }
                               },
 

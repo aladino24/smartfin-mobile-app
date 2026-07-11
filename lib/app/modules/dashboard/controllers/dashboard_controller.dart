@@ -7,12 +7,16 @@ import '../../../services/api_service.dart';
 import '../../../services/storage_service.dart';
 import '../../../widgets/custom_dialog.dart';
 import '../../transaction/model/transaction_model.dart';
+import '../models/dashboard_model.dart';
 
 class DashboardController extends GetxController {
    final ApiService api = ApiService();
   final StorageService storage = StorageService();
   var isLoadingTransaction = false.obs;
   var transactions = <TransactionModel>[].obs;
+  var isLoadingDashboard = false.obs;
+
+final dashboard = Rxn<DashboardData>();
 
   // =========================
   // USER STATE
@@ -25,10 +29,13 @@ class DashboardController extends GetxController {
     super.onInit();
     getUser();
     getTransactions();
+      getDashboard();
   }
 
-  String formatRupiah(int amount) {
-  return "Rp ${amount.toString().replaceAllMapped(
+ String formatRupiah(num amount) {
+  final value = amount.toInt();
+
+  return "Rp ${value.toString().replaceAllMapped(
     RegExp(r'(\d)(?=(\d{3})+(?!\d))'),
     (match) => '${match[1]}.',
   )}";
@@ -83,6 +90,7 @@ class DashboardController extends GetxController {
   Future<void> refreshDashboardData() async {
     await getUser();
     await getTransactions();
+    await getDashboard();
   }
 
   //transaction
@@ -113,6 +121,33 @@ class DashboardController extends GetxController {
     }
   }
 
+  Future<void> getDashboard() async {
+  try {
+    isLoadingDashboard.value = true;
+
+    final token = storage.getToken();
+
+    if (token == null) {
+      Get.offAllNamed('/login');
+      return;
+    }
+
+    final res = await api.getDashboard(token);
+
+    final model = DashboardResponse.fromJson(res);
+
+    dashboard.value = model.data;
+
+  } catch (e) {
+    CustomDialog.error(
+      title: "Ambil Dashboard Gagal",
+      message: e.toString(),
+    );
+  } finally {
+    isLoadingDashboard.value = false;
+  }
+}
+
   // =====================================================
   // GETTER HELPER (biar UI clean)
   // =====================================================
@@ -120,4 +155,93 @@ class DashboardController extends GetxController {
   String get email => user.value?.email ?? "-";
   String get phone => user.value?.phone ?? "-";
   String get avatar => user.value?.avatar ?? "";
+
+  //==================================================
+  // OVERVIEW
+  //==================================================
+
+  double get totalBalance =>
+      dashboard.value?.overview.totalBalance ?? 0;
+
+  double get monthlyIncome =>
+      dashboard.value?.overview.monthlyIncome ?? 0;
+
+  double get monthlyExpense =>
+      dashboard.value?.overview.monthlyExpense ?? 0;
+
+  double get totalInvestment =>
+      dashboard.value?.overview.totalInvestment ?? 0;
+
+  int get financialScore =>
+      dashboard.value?.overview.financialScore ?? 0;
+
+  double get previousBalance =>
+    dashboard.value?.overview.previousBalance ?? 0;
+
+  double get balanceChangePercent =>
+      dashboard.value?.overview.balanceChangePercent ?? 0;
+
+  String get balanceChangeType =>
+      dashboard.value?.overview.balanceChangeType ?? "stable";
+
+  bool get isIncrease =>
+      balanceChangeType == "increase";
+
+  //==================================================
+  // AI
+  //==================================================
+
+  String get aiInsight =>
+      dashboard.value?.aiInsight ?? "";
+
+  //==================================================
+  // RECENT TRANSACTION
+  //==================================================
+
+  List<TransactionModel> get recentDashboardTransactions =>
+      dashboard.value?.recentTransactions ?? [];
+
+  //==================================================
+  // CASHFLOW
+  //==================================================
+
+  List<CashflowChart> get cashflowChart =>
+      dashboard.value?.cashflowChart ?? [];
+
+  //==================================================
+  // EXPENSE CATEGORY
+  //==================================================
+
+  List<ExpenseCategory> get expenseByCategory =>
+      dashboard.value?.expenseByCategory ?? [];
+
+  List<WalletModel> get walletSummary =>
+    dashboard.value?.overview.walletSummary ?? [];
+
+  //==================================================
+  // FINANCIAL SCORE
+  //==================================================
+
+  double get financialProgress =>
+      financialScore / 100;
+
+  String get financialStatus {
+    if (financialScore >= 90) {
+      return "Excellent";
+    }
+
+    if (financialScore >= 75) {
+      return "Good";
+    }
+
+    if (financialScore >= 60) {
+      return "Fair";
+    }
+
+    if (financialScore >= 40) {
+      return "Poor";
+    }
+
+    return "Critical";
+  }
 }

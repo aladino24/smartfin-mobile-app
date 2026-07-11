@@ -230,4 +230,17 @@ Future<VoiceTransactionResponse>
       );
     }
   }
+
+  Future<Map<String, dynamic>> getDashboard(String token) async {
+  final response = await http.get(
+    Uri.parse("$baseUrl/dashboard"),
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token",
+    },
+  );
+
+  return jsonDecode(response.body);
+}
 }

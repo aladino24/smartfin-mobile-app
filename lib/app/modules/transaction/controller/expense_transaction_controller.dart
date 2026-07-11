@@ -8,6 +8,7 @@ import '../../../services/api_service.dart';
 import '../../../services/storage_service.dart';
 import '../../../widgets/custom_dialog.dart';
 import '../../../widgets/loading_helper.dart';
+import '../../dashboard/controllers/dashboard_controller.dart';
 import '../../master/controllers/category_controller.dart';
 import '../../master/controllers/wallet_controller.dart';
 
@@ -15,6 +16,7 @@ class ExpenseTransactionController
     extends GetxController {
   final WalletController walletController = Get.put<WalletController>(WalletController());
   final CategoryController categoryController = Get.put<CategoryController>(CategoryController());
+  final DashboardController dashboardController = Get.put<DashboardController>(DashboardController());
   // =========================
   // SPEECH
   // =========================
@@ -60,7 +62,7 @@ class ExpenseTransactionController
   void onInit() {
     super.onInit();
     walletController.loadWallets();
-    categoryController.loadCategory('income');
+    categoryController.loadCategory('expense');
   }
   
 
@@ -243,7 +245,6 @@ class ExpenseTransactionController
     // AUTO FILL FORM
     // =========================
 
-    print("Voice Transaction Data: ${data.toJson()}");
 
     titleController.text =
         data.title;
@@ -294,7 +295,7 @@ class ExpenseTransactionController
   // SAVE
   // =========================
 
-  Future<void> saveTransaction() async {
+  Future<void> saveTransaction(String tipe) async {
     try {
       if (titleController.text.isEmpty ||
           amountController.text.isEmpty) {
@@ -328,7 +329,7 @@ class ExpenseTransactionController
       final body = {
         "wallet_id": wallet.id,
         "category_id": category.id,
-        "transaction_type": "income",
+        "transaction_type": "expense",
         "title": titleController.text,
         "description": descriptionController.text,
         "amount": int.tryParse(amountController.text.replaceAll('.', ''),) ?? 0,
@@ -354,6 +355,7 @@ class ExpenseTransactionController
 
         // optional reset
         resetForm();
+        dashboardController.refreshDashboardData();
       } else {
         CustomDialog.error(
           title: "Save Failed",

@@ -9,7 +9,6 @@ import '../controllers/dashboard_controller.dart';
 import '../widgets/notification_panel.dart';
 
 class DashboardPage extends StatefulWidget {
-
   DashboardPage({super.key});
 
   @override
@@ -18,12 +17,11 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   final DashboardController controller = Get.put(DashboardController());
-   final box = GetStorage();
+  final box = GetStorage();
   final GlobalKey incomeKey = GlobalKey();
   final GlobalKey expenseKey = GlobalKey();
   final GlobalKey investKey = GlobalKey();
   final GlobalKey scanKey = GlobalKey();
-
 
   Widget build(BuildContext context) {
     final now = DateTime.now();
@@ -37,194 +35,199 @@ class _DashboardPageState extends State<DashboardPage> {
       blurValue: 1,
       autoPlay: false,
       builder: (showcaseContext) {
-           WidgetsBinding.instance
-            .addPostFrameCallback((_) {
-
-          final alreadyShow =
-              box.read('dashboard_showcase') ??
-                  false;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final alreadyShow = box.read('dashboard_showcase') ?? false;
 
           if (!alreadyShow) {
-
             ShowCaseWidget.of(
               showcaseContext,
-            ).startShowCase([
-              incomeKey,
-              expenseKey,
-              investKey,
-              scanKey,
-            ]);
+            ).startShowCase([incomeKey, expenseKey, investKey, scanKey]);
 
-            box.write(
-              'dashboard_showcase',
-              true,
-            );
+            box.write('dashboard_showcase', true);
           }
         });
-      return Scaffold(
-      backgroundColor: bgLight,
-      body: SafeArea(
-        child: RefreshIndicator(
-          color: accentGold, // Warna spinner loader
-          backgroundColor: primaryDark, // Warna background spinner
-          strokeWidth: 2.5,
-          onRefresh: () => controller.refreshDashboardData(),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 1. HEADER USER
-          
-                _buildHeader(context, formattedDate),
-          
-                const SizedBox(height: 24),
-          
-                // 2. TOTAL BALANCE CARD
-          
-                _buildBalanceCard(accentGold),
-          
-                const SizedBox(height: 20),
-          
-                // 3. INCOME VS EXPENSE (Kanan - Kiri Modern)
-          
-                _buildIncomeExpense(),
-          
-                const SizedBox(height: 20),
-          
-                // 4. WALLET SUMMARY
-          
-                _buildWalletSummary(),
-          
-                const SizedBox(height: 20),
-          
-                // 5. FINANCIAL ANALYTICS (Bar & Pie Chart Terpadu)
-                _buildAnalytics(),
-          
-                const SizedBox(height: 20),
-          
-                // 6. BUDGET PROGRESS
-                _buildBudget(),
-          
-                const SizedBox(height: 20),
-          
-                // 7. RECENT TRANSACTIONS (Dengan pewarnaan pintar)
-                _buildTransactions(),
-          
-                const SizedBox(height: 20),
-          
-                // 8. AI INSIGHTS (Gaya Edukatif/Robot AI Modern)
-                _buildAIInsights(),
-          
-                const SizedBox(height: 20),
-          
-                // 9. SMART REMINDER
-                _buildReminder(),
-              ],
-          
+        return Scaffold(
+          backgroundColor: bgLight,
+          body: SafeArea(
+            child: RefreshIndicator(
+              color: accentGold, // Warna spinner loader
+              backgroundColor: primaryDark, // Warna background spinner
+              strokeWidth: 2.5,
+              onRefresh: () => controller.refreshDashboardData(),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // 1. HEADER USER
+                    _buildHeader(context, formattedDate),
+
+                    const SizedBox(height: 24),
+
+                    // 2. TOTAL BALANCE CARD
+                    _buildBalanceCard(accentGold),
+
+                    const SizedBox(height: 20),
+
+                    // 3. INCOME VS EXPENSE (Kanan - Kiri Modern)
+                    _buildIncomeExpense(),
+
+                    const SizedBox(height: 20),
+
+                    // 4. WALLET SUMMARY
+                    _buildWalletSummary(),
+
+                    const SizedBox(height: 20),
+
+                    // 5. FINANCIAL ANALYTICS (Bar & Pie Chart Terpadu)
+                    _buildAnalytics(),
+
+                    const SizedBox(height: 20),
+
+                    // 6. BUDGET PROGRESS
+                    _buildBudget(),
+
+                    const SizedBox(height: 20),
+
+                    // 7. RECENT TRANSACTIONS (Dengan pewarnaan pintar)
+                    _buildTransactions(),
+
+                    const SizedBox(height: 20),
+
+                    // 8. AI INSIGHTS (Gaya Edukatif/Robot AI Modern)
+                    _buildAIInsights(),
+
+                    const SizedBox(height: 20),
+
+                    // 9. SMART REMINDER
+                    _buildReminder(),
+                  ],
+                ),
+              ),
             ),
-          
           ),
-        ),
-
-      ),
-
-    );
-    
-      }
-    
+        );
+      },
     );
   }
 
   // =====================================================
-  Widget _buildHeader(BuildContext context, String date) { // <-- Tambah BuildContext di parameter
-    return Obx(() => Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(2),
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(colors: [Color(0xFFD4AF37), Color(0xFFFFECB3)]),
-          ),
-          child: (controller.avatar.isNotEmpty && controller.avatar != null) ? CircleAvatar(
-            radius: 26,
-            backgroundColor: Color(0xFF1E2A44),
-            child:ClipOval(
-              child: Image.network(
-                controller.avatar,
-                width: 52,
-                height: 52,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(Icons.person, color: Colors.white, size: 28);
-                },
+  Widget _buildHeader(BuildContext context, String date) {
+    // <-- Tambah BuildContext di parameter
+    return Obx(
+      () => Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(2),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                colors: [Color(0xFFD4AF37), Color(0xFFFFECB3)],
               ),
             ),
-          ) : CircleAvatar(
-            radius: 26,
-            backgroundColor: Color(0xFF1E2A44),
-            child: Icon(Icons.person, color: Colors.white, size: 28),
+            child: (controller.avatar.isNotEmpty && controller.avatar != null)
+                ? CircleAvatar(
+                    radius: 26,
+                    backgroundColor: Color(0xFF1E2A44),
+                    child: ClipOval(
+                      child: Image.network(
+                        controller.avatar,
+                        width: 52,
+                        height: 52,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 28,
+                          );
+                        },
+                      ),
+                    ),
+                  )
+                : CircleAvatar(
+                    radius: 26,
+                    backgroundColor: Color(0xFF1E2A44),
+                    child: Icon(Icons.person, color: Colors.white, size: 28),
+                  ),
           ),
-        ),
 
-        const SizedBox(width: 14),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Welcome Back 👋",
-                style: TextStyle(fontSize: 13, color: Colors.blueGrey, fontWeight: FontWeight.w500),
-              ),
-              Text(
-               controller.fullName,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF08111F)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 2), 
-                child: Text(
-                  date,
-                  style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Welcome Back 👋",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.blueGrey,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  controller.fullName,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF08111F),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Text(
+                    date,
+                    style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // ICON NOTIFIKASI DENGAN BADGE MODERN
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(14),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 10,
+                ),
+              ],
+            ),
+            child: IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) =>
+                      const NotificationPanel(), // <-- Panggil kelas di sini
+                );
+              },
+
+              icon: Badge(
+                backgroundColor: const Color(0xFFE71D36),
+                label: const Text(
+                  '2',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                child: const Icon(
+                  Icons.notifications_none_rounded,
+                  color: Color(0xFF08111F),
                 ),
               ),
-
-            ],
-
-          ),
-
-        ),
-
-        // ICON NOTIFIKASI DENGAN BADGE MODERN
-
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 10)],
-          ),
-          child: IconButton(
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (context) => const NotificationPanel(), // <-- Panggil kelas di sini
-              );
-            },
-
-            icon: Badge(
-              backgroundColor: const Color(0xFFE71D36),
-              label: const Text('2', style: TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold)),
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-              child: const Icon(Icons.notifications_none_rounded, color: Color(0xFF08111F)),
             ),
           ),
-                  )
-
-      ],
-
-    ));
-
+        ],
+      ),
+    );
   }
 
   // =====================================================
@@ -237,17 +240,14 @@ class _DashboardPageState extends State<DashboardPage> {
           colors: [Color(0xFF08111F), Color(0xFF1A3154)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-
         ),
         boxShadow: [
           BoxShadow(
             color: const Color(0xFF08111F).withOpacity(0.3),
             blurRadius: 20,
             offset: const Offset(0, 10),
-          )
-
+          ),
         ],
-
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,150 +255,210 @@ class _DashboardPageState extends State<DashboardPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Total Balance", style: TextStyle(color: Colors.white60, fontSize: 14)),
+              const Text(
+                "Total Balance",
+                style: TextStyle(color: Colors.white60, fontSize: 14),
+              ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.greenAccent.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.arrow_upward_rounded, color: Colors.greenAccent, size: 14),
-                    SizedBox(width: 4),
-                    Text("+12%", style: TextStyle(color: Colors.greenAccent, fontSize: 12, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              )
+                child: Obx(() {
+                  final increase = controller.isIncrease;
+
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: increase
+                          ? Colors.green.withOpacity(.15)
+                          : Colors.red.withOpacity(.15),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          increase
+                              ? Icons.arrow_upward_rounded
+                              : Icons.arrow_downward_rounded,
+                          color: increase
+                              ? Colors.greenAccent
+                              : Colors.redAccent,
+                          size: 14,
+                        ),
+
+                        const SizedBox(width: 4),
+
+                        Text(
+                          "${controller.balanceChangePercent.toStringAsFixed(2)}%",
+                          style: TextStyle(
+                            color: increase
+                                ? Colors.greenAccent
+                                : Colors.redAccent,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ),
             ],
           ),
-          const Text(
-            "Rp 12.500.000",
-            style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold, letterSpacing: 0.5),
-          ),
+          Obx(() {
+            return Text(
+              controller.formatRupiah(controller.totalBalance),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.5,
+              ),
+            );
+          }),
 
-          const Text("vs Rp 11.160.000 bulan lalu", style: TextStyle(color: Colors.white38, fontSize: 12)),
-
+          Obx(() {
+            return Text(
+              "vs ${controller.formatRupiah(controller.previousBalance)} bulan lalu",
+              style: const TextStyle(color: Colors.white38, fontSize: 12),
+            );
+          }),
           // Mini Sparkline Preview
-          SizedBox(
-            height: 50,
-            child: LineChart(
-              LineChartData(
-                gridData: const FlGridData(show: false),
-                titlesData: FlTitlesData(show: false),
-                borderData: FlBorderData(show: false),
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: [
-                      const FlSpot(0, 3),
-                      const FlSpot(1, 2.5),
-                      const FlSpot(2, 4),
-                      const FlSpot(3, 3.5),
-                      const FlSpot(4, 5.5),
-                    ],
-                    isCurved: true,
-                    color: gold,
-                    barWidth: 3,
-                    isStrokeCapRound: true,
-                    dotData: const FlDotData(show: false),
-                    belowBarData: BarAreaData(
-                      show: true,
-                      color: gold.withOpacity(0.1),
-                    ),
-                  ),
-                ],
+          Obx(() {
+
+            final spots = controller.cashflowChart
+                .asMap()
+                .entries
+                .map((entry) {
+
+                  return FlSpot(
+                    entry.key.toDouble(),
+                    entry.value.income / 1000000,
+                  );
+
+                }).toList();
+
+            if (spots.isEmpty) {
+              return const SizedBox(
+                height: 50,
+              );
+            }
+
+            return SizedBox(
+              height: 50,
+              child: LineChart(
+                LineChartData(
+                  gridData: const FlGridData(show: false),
+                  titlesData: const FlTitlesData(show: false),
+                  borderData: FlBorderData(show: false),
+                  lineBarsData: [
+
+                    LineChartBarData(
+                      spots: spots,
+                      isCurved: true,
+                      color: gold,
+                      barWidth: 3,
+                      isStrokeCapRound: true,
+                      dotData: const FlDotData(show: false),
+                      belowBarData: BarAreaData(
+                        show: true,
+                        color: gold.withOpacity(.1),
+                      ),
+                    )
+
+                  ],
+                ),
               ),
-            ),
-          ),
+            );
+
+          }),
           const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-
-            Showcase(
-              key: incomeKey,
-              title: "Income Transaction",
-              description:
-                  "Catat pemasukan menggunakan AI Voice Assistant.",
-              child: const _QuickAction(
-                icon: Icons.add_rounded,
-                label: "Income",
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Showcase(
+                key: incomeKey,
+                title: "Income Transaction",
+                description: "Catat pemasukan menggunakan AI Voice Assistant.",
+                child: const _QuickAction(
+                  icon: Icons.add_rounded,
+                  label: "Income",
+                ),
               ),
-            ),
 
-            Showcase(
-              key: expenseKey,
-              title: "Expense Transaction",
-              description:
-                  "Kelola pengeluaran harian dengan mudah.",
-              child: const _QuickAction(
-                icon: Icons.remove_rounded,
-                label: "Expense",
+              Showcase(
+                key: expenseKey,
+                title: "Expense Transaction",
+                description: "Kelola pengeluaran harian dengan mudah.",
+                child: const _QuickAction(
+                  icon: Icons.remove_rounded,
+                  label: "Expense",
+                ),
               ),
-            ),
 
-            Showcase(
-              key: investKey,
-              title: "Investment",
-              description:
-                  "Pantau investasi dan perkembangan aset.",
-              child: const _QuickAction(
-                icon: Icons.trending_up_rounded,
-                label: "Invest",
+              Showcase(
+                key: investKey,
+                title: "Investment",
+                description: "Pantau investasi dan perkembangan aset.",
+                child: const _QuickAction(
+                  icon: Icons.trending_up_rounded,
+                  label: "Invest",
+                ),
               ),
-            ),
 
-            Showcase(
-              key: scanKey,
-              title: "Smart Scan",
-              description:
-                  "Scan struk transaksi otomatis menggunakan AI.",
-              child: const _QuickAction(
-                icon: Icons.qr_code_scanner_rounded,
-                label: "Scan",
+              Showcase(
+                key: scanKey,
+                title: "Smart Scan",
+                description: "Scan struk transaksi otomatis menggunakan AI.",
+                child: const _QuickAction(
+                  icon: Icons.qr_code_scanner_rounded,
+                  label: "Scan",
+                ),
               ),
-            ),
-          ],
-        )
+            ],
+          ),
         ],
       ),
-
     );
-
   }
 
   // =====================================================
-    Widget _buildIncomeExpense() {
-
-    return Row(
-      children: [
-        Expanded(
-          child: _modernStatTile(
-            title: "Income",
-            amount: "Rp 15.000.000",
-            period: "/ month", // <--- Tambah ini
-            icon: Icons.arrow_downward_rounded,
-            color: const Color(0xFF2EC4B6),
+  Widget _buildIncomeExpense() {
+    return Obx(() {
+      return Row(
+        children: [
+          Expanded(
+            child: _modernStatTile(
+              title: "Income",
+              amount: controller.formatRupiah(controller.monthlyIncome),
+              period: "/ month",
+              icon: Icons.arrow_downward_rounded,
+              color: const Color(0xFF2EC4B6),
+            ),
           ),
 
-        ),
+          const SizedBox(width: 14),
 
-        const SizedBox(width: 14),
-        Expanded(
-          child: _modernStatTile(
-            title: "Expense",
-            amount: "Rp 8.500.000",
-            period: "/ month", // <--- Tambah ini
-            icon: Icons.arrow_upward_rounded,
-            color: const Color(0xFFE71D36),
+          Expanded(
+            child: _modernStatTile(
+              title: "Expense",
+              amount: controller.formatRupiah(controller.monthlyExpense),
+              period: "/ month",
+              icon: Icons.arrow_upward_rounded,
+              color: const Color(0xFFE71D36),
+            ),
           ),
-
-        ),
-
-      ],
-
-    );
-
+        ],
+      );
+    });
   }
 
   Widget _modernStatTile({
@@ -413,13 +473,18 @@ class _DashboardPageState extends State<DashboardPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10)],
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10),
+        ],
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(color: color.withOpacity(0.12), shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.12),
+              shape: BoxShape.circle,
+            ),
             child: Icon(icon, color: color, size: 22),
           ),
 
@@ -428,59 +493,109 @@ class _DashboardPageState extends State<DashboardPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500)),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
                 const SizedBox(height: 2),
 
                 // Menggunakan RichText agar nominal dan periode menyatu dengan rapi namun beda ukuran/warna
-
                 RichText(
                   text: TextSpan(
                     style: const TextStyle(color: Color(0xFF08111F)),
                     children: [
                       TextSpan(
                         text: amount,
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       TextSpan(
                         text: " $period",
-                        style: const TextStyle(fontSize: 11, color: Colors.grey, fontWeight: FontWeight.normal),
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
-
                     ],
-
                   ),
-
                 ),
-
               ],
-
             ),
-
-          )
-
+          ),
         ],
-
       ),
-
     );
-
   }
 
   // =====================================================
   Widget _buildWalletSummary() {
-    return _sectionCard(
-      title: "Wallet Summary",
-      child: Column(
-        children: const [
-          _WalletRow("Cash Wallet", "Rp 1.000.000", Icons.payments_rounded, Color(0xFF4EA8DE)),
-          _WalletRow("Bank BCA", "Rp 8.500.000", Icons.account_balance_rounded, Color(0xFF5390D9)),
-          _WalletRow("OVO Balance", "Rp 350.000", Icons.account_balance_wallet_rounded, Color(0xFF740CDC)),
-        ],
-      ),
+  return _sectionCard(
+    title: "Wallet Summary",
+    child: Obx(() {
+      if (controller.walletSummary.isEmpty) {
+        return const Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              "No Wallet Available",
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+        );
+      }
 
-    );
+      return Column(
+        children: controller.walletSummary.take(5).map((wallet) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: _WalletRow(
+              wallet.walletName,
+              controller.formatRupiah(wallet.balance),
+              _getWalletIcon(wallet.icon),
+              Color(
+                int.parse(
+                  wallet.color.replaceFirst("#", "0xFF"),
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      );
+    }),
+  );
+}
 
+IconData _getWalletIcon(String? icon) {
+  switch (icon) {
+    case "payments":
+      return Icons.payments_rounded;
+
+    case "account_balance":
+      return Icons.account_balance_rounded;
+
+    case "account_balance_wallet":
+      return Icons.account_balance_wallet_rounded;
+
+    case "credit_card":
+      return Icons.credit_card_rounded;
+
+    case "savings":
+      return Icons.savings_rounded;
+
+    case "wallet":
+      return Icons.wallet_rounded;
+
+    default:
+      return Icons.account_balance_wallet_rounded;
   }
+}
 
   // =====================================================
   Widget _buildAnalytics() {
@@ -492,10 +607,19 @@ class _DashboardPageState extends State<DashboardPage> {
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Weekly Overview", style: TextStyle(color: Colors.grey, fontSize: 13)),
-              Text("Food & Cafe (Top)", style: TextStyle(color: Color(0xFFD4AF37), fontWeight: FontWeight.bold, fontSize: 13)),
+              Text(
+                "Weekly Overview",
+                style: TextStyle(color: Colors.grey, fontSize: 13),
+              ),
+              Text(
+                "Food & Cafe (Top)",
+                style: TextStyle(
+                  color: Color(0xFFD4AF37),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
             ],
-
           ),
           const SizedBox(height: 24),
           // Chart Implementasi fl_chart
@@ -513,13 +637,25 @@ class _DashboardPageState extends State<DashboardPage> {
                       showTitles: true,
                       getTitlesWidget: (value, meta) {
                         const days = ['Mn', 'Tu', 'Wd', 'Th', 'Fr', 'St', 'Sn'];
-                        return Text(days[value.toInt() % 7], style: const TextStyle(color: Colors.grey, fontSize: 11));
+                        return Text(
+                          days[value.toInt() % 7],
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 11,
+                          ),
+                        );
                       },
                     ),
                   ),
-                  leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  leftTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
                 ),
                 gridData: const FlGridData(show: false),
                 borderData: FlBorderData(show: false),
@@ -531,16 +667,13 @@ class _DashboardPageState extends State<DashboardPage> {
                   _makeBarGroup(4, 6, 5),
                   _makeBarGroup(5, 9, 3),
                   _makeBarGroup(6, 4, 2),
-
                 ],
               ),
             ),
           ),
         ],
       ),
-
     );
-
   }
 
   BarChartGroupData _makeBarGroup(int x, double y1, double y2) {
@@ -548,8 +681,18 @@ class _DashboardPageState extends State<DashboardPage> {
       barsSpace: 4,
       x: x,
       barRods: [
-        BarChartRodData(toY: y1, color: const Color(0xFF2EC4B6), width: 7, borderRadius: BorderRadius.circular(4)),
-        BarChartRodData(toY: y2, color: const Color(0xFFE71D36), width: 7, borderRadius: BorderRadius.circular(4)),
+        BarChartRodData(
+          toY: y1,
+          color: const Color(0xFF2EC4B6),
+          width: 7,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        BarChartRodData(
+          toY: y2,
+          color: const Color(0xFFE71D36),
+          width: 7,
+          borderRadius: BorderRadius.circular(4),
+        ),
       ],
     );
   }
@@ -560,131 +703,135 @@ class _DashboardPageState extends State<DashboardPage> {
       title: "Budget Progress",
       child: Column(
         children: const [
-          _BudgetItem("Food & Groceries", 0.75, "Rp 1.500.000 / Rp 2.000.000", Color(0xFFFFB703)),
-          _BudgetItem("Transport & Gasoline", 0.40, "Rp 400.000 / Rp 1.000.000", Color(0xFF2196F3)),
-          _BudgetItem("Entertainment & Movies", 0.92, "Rp 920.000 / Rp 1.000.000", Color(0xFFE71D36)),
+          _BudgetItem(
+            "Food & Groceries",
+            0.75,
+            "Rp 1.500.000 / Rp 2.000.000",
+            Color(0xFFFFB703),
+          ),
+          _BudgetItem(
+            "Transport & Gasoline",
+            0.40,
+            "Rp 400.000 / Rp 1.000.000",
+            Color(0xFF2196F3),
+          ),
+          _BudgetItem(
+            "Entertainment & Movies",
+            0.92,
+            "Rp 920.000 / Rp 1.000.000",
+            Color(0xFFE71D36),
+          ),
         ],
-
       ),
-
     );
-
   }
 
   // =====================================================
-Widget _buildTransactions() {
-  final controller = Get.find<DashboardController>();
+  Widget _buildTransactions() {
+    final controller = Get.find<DashboardController>();
 
-  return _sectionCard(
-    title: "Recent Transactions",
-    child: Obx(() {
-      if (controller.isLoadingTransaction.value) {
-        return const Center(child: CircularProgressIndicator());
-      }
+    return _sectionCard(
+      title: "Recent Transactions",
+      child: Obx(() {
+        if (controller.isLoadingTransaction.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-      if (controller.transactions.isEmpty) {
-        return const Text("No transactions found");
-      }
+        if (controller.transactions.isEmpty) {
+          return const Text("No transactions found");
+        }
 
-      return Column(
-        children: controller.transactions.take(5).map((tx) {
-          final isIncome = tx.transactionType == "income";
+        return Column(
+          children: controller.transactions.take(5).map((tx) {
+            final isIncome = tx.transactionType == "income";
 
-          final amountText = isIncome
-              ? "+ ${controller.formatRupiah(tx.amount)}"
-              : "- ${controller.formatRupiah(tx.amount)}";
+            final amountText = isIncome
+                ? "+ ${controller.formatRupiah(tx.amount)}"
+                : "- ${controller.formatRupiah(tx.amount)}";
 
-          final mainColor = isIncome
-              ? const Color(0xFF2EC4B6)
-              : const Color(0xFFE71D36);
+            final mainColor = isIncome
+                ? const Color(0xFF2EC4B6)
+                : const Color(0xFFE71D36);
 
-          final bgColor = isIncome
-              ? const Color(0xFF2EC4B6).withOpacity(0.12)
-              : const Color(0xFFE71D36).withOpacity(0.12);
+            final bgColor = isIncome
+                ? const Color(0xFF2EC4B6).withOpacity(0.12)
+                : const Color(0xFFE71D36).withOpacity(0.12);
 
-          /// 🎯 ICON
-          final icon = isIncome
-              ? Icons.trending_up_rounded
-              : Icons.trending_down_rounded;
+            /// 🎯 ICON
+            final icon = isIncome
+                ? Icons.trending_up_rounded
+                : Icons.trending_down_rounded;
 
-          return Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 12,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                /// ICON CIRCLE
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: bgColor,
-                    shape: BoxShape.circle,
+            return Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
                   ),
-                  child: Icon(
-                    icon,
-                    color: mainColor,
-                    size: 22,
+                ],
+              ),
+              child: Row(
+                children: [
+                  /// ICON CIRCLE
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: bgColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(icon, color: mainColor, size: 22),
                   ),
-                ),
 
-                const SizedBox(width: 12),
+                  const SizedBox(width: 12),
 
-                /// TITLE + DATE
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        tx.title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
+                  /// TITLE + DATE
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          tx.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        DateFormat('dd MMM yyyy')
-                            .format(tx.transactionDate),
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade500,
+                        const SizedBox(height: 4),
+                        Text(
+                          DateFormat('dd MMM yyyy').format(tx.transactionDate),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade500,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                /// AMOUNT
-                Text(
-                  amountText,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                    color: mainColor,
+                  /// AMOUNT
+                  Text(
+                    amountText,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: mainColor,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        }).toList(),
-      );
-    }),
-  );
-}
+                ],
+              ),
+            );
+          }).toList(),
+        );
+      }),
+    );
+  }
 
   // =====================================================
   Widget _buildAIInsights() {
@@ -703,10 +850,8 @@ Widget _buildTransactions() {
             color: const Color(0xFF2575FC).withOpacity(0.3),
             blurRadius: 15,
             offset: const Offset(0, 8),
-          )
-
+          ),
         ],
-
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -718,7 +863,10 @@ Widget _buildTransactions() {
               Container(
                 width: 54,
                 height: 54,
-                decoration: BoxDecoration(color: Colors.white.withOpacity(0.15), shape: BoxShape.circle),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.15),
+                  shape: BoxShape.circle,
+                ),
               ),
               const _MovingAIIcon(), // Widget Custom Animasi Pendek
             ],
@@ -730,25 +878,26 @@ Widget _buildTransactions() {
               children: [
                 Text(
                   "SmartAI Analysis 🤖",
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 16),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                 ),
                 SizedBox(height: 8),
                 _AIBulletText("Pengeluaran kafe kamu naik 25% pekan ini."),
-                _AIBulletText("Disarankan menghemat Rp 500.000 untuk tabungan."),
-                _AIBulletText("Portofolio Moderate siap dialokasikan ke reksa dana."),
-
+                _AIBulletText(
+                  "Disarankan menghemat Rp 500.000 untuk tabungan.",
+                ),
+                _AIBulletText(
+                  "Portofolio Moderate siap dialokasikan ke reksa dana.",
+                ),
               ],
-
             ),
-
           ),
-
         ],
-
       ),
-
     );
-
   }
 
   // =====================================================
@@ -764,8 +913,15 @@ Widget _buildTransactions() {
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(color: Color(0xFFE71D36), shape: BoxShape.circle),
-            child: const Icon(Icons.alarm_rounded, color: Colors.white, size: 20),
+            decoration: const BoxDecoration(
+              color: Color(0xFFE71D36),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.alarm_rounded,
+              color: Colors.white,
+              size: 20,
+            ),
           ),
 
           const SizedBox(width: 14),
@@ -773,21 +929,25 @@ Widget _buildTransactions() {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Smart Reminder", style: TextStyle(color: Color(0xFFE71D36), fontWeight: FontWeight.bold, fontSize: 14)),
+                Text(
+                  "Smart Reminder",
+                  style: TextStyle(
+                    color: Color(0xFFE71D36),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
                 SizedBox(height: 2),
-                Text("Langganan Netflix Premium jatuh tempo besok.", style: TextStyle(color: Color(0xFF5C1D24), fontSize: 13)),
+                Text(
+                  "Langganan Netflix Premium jatuh tempo besok.",
+                  style: TextStyle(color: Color(0xFF5C1D24), fontSize: 13),
+                ),
               ],
-
             ),
-
-          )
-
+          ),
         ],
-
       ),
-
     );
-
   }
 
   // =====================================================
@@ -797,35 +957,38 @@ Widget _buildTransactions() {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 15, offset: const Offset(0, 5))],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.02),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF08111F)),
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF08111F),
+            ),
           ),
           const SizedBox(height: 16),
           child,
         ],
-
       ),
-
     );
-
   }
 }
-
-
 
 // ==============================================================================
 
 // ATRIBUT SUB-WIDGET IMPLEMENTASI DETAILE
 
 // ==============================================================================
-
-
 
 class _QuickAction extends StatelessWidget {
   final IconData icon;
@@ -837,13 +1000,13 @@ class _QuickAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-          if (label == "Income") {
-              Get.toNamed('/income-transaction');
-            } else if (label == "Expense") {
-              Get.toNamed('/expense-transaction');
-            } else {
-              // Implementasi untuk Invest, Scan jika diperlukan
-            }
+        if (label == "Income") {
+          Get.toNamed('/income-transaction');
+        } else if (label == "Expense") {
+          Get.toNamed('/expense-transaction');
+        } else {
+          // Implementasi untuk Invest, Scan jika diperlukan
+        }
       },
       child: Column(
         children: [
@@ -858,17 +1021,19 @@ class _QuickAction extends StatelessWidget {
             child: Icon(icon, color: const Color(0xFFD4AF37)),
           ),
           const SizedBox(height: 8),
-          Text(label, style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w500))
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white70,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
-      
       ),
     );
-
   }
-
 }
-
-
 
 class _WalletRow extends StatelessWidget {
   final String name;
@@ -878,9 +1043,7 @@ class _WalletRow extends StatelessWidget {
 
   const _WalletRow(this.name, this.balance, this.icon, this.color);
 
-
   @override
-
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -888,25 +1051,35 @@ class _WalletRow extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(14)),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(14),
+            ),
             child: Icon(icon, color: color, size: 20),
           ),
 
           const SizedBox(width: 14),
           Expanded(
-            child: Text(name, style: const TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF08111F))),
+            child: Text(
+              name,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF08111F),
+              ),
+            ),
           ),
-          Text(balance, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF08111F))),
+          Text(
+            balance,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF08111F),
+            ),
+          ),
         ],
-
       ),
-
     );
-
   }
-
 }
-
 
 class _BudgetItem extends StatefulWidget {
   final String label;
@@ -918,31 +1091,31 @@ class _BudgetItem extends StatefulWidget {
 
   @override
   State<_BudgetItem> createState() => _BudgetItemState();
-
 }
 
-
-class _BudgetItemState extends State<_BudgetItem> with SingleTickerProviderStateMixin {
+class _BudgetItemState extends State<_BudgetItem>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: const Duration(milliseconds: 1500), vsync: this);
-    _animation = Tween<double>(begin: 0, end: widget.value).animate(CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 0, end: widget.value).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
+    );
     _controller.forward();
   }
-
-
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -954,8 +1127,21 @@ class _BudgetItemState extends State<_BudgetItem> with SingleTickerProviderState
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(widget.label, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-              Text("${(widget.value * 100).toInt()}%", style: TextStyle(color: widget.color, fontWeight: FontWeight.bold, fontSize: 13)),
+              Text(
+                widget.label,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+              Text(
+                "${(widget.value * 100).toInt()}%",
+                style: TextStyle(
+                  color: widget.color,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
             ],
           ),
 
@@ -973,17 +1159,15 @@ class _BudgetItemState extends State<_BudgetItem> with SingleTickerProviderState
             },
           ),
           const SizedBox(height: 4),
-          Text(widget.desc, style: const TextStyle(color: Colors.grey, fontSize: 11)),
+          Text(
+            widget.desc,
+            style: const TextStyle(color: Colors.grey, fontSize: 11),
+          ),
         ],
-
       ),
-
     );
-
   }
-
 }
-
 
 class _Transaction extends StatelessWidget {
   final String title;
@@ -992,7 +1176,13 @@ class _Transaction extends StatelessWidget {
   final IconData icon;
   final Color typeColor;
 
-  const _Transaction(this.title, this.amount, this.time, this.icon, this.typeColor);
+  const _Transaction(
+    this.title,
+    this.amount,
+    this.time,
+    this.icon,
+    this.typeColor,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -1000,18 +1190,29 @@ class _Transaction extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey.shade100, width: 1)),
+        border: Border(
+          bottom: BorderSide(color: Colors.grey.shade100, width: 1),
+        ),
       ),
 
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(vertical: 4),
         leading: Container(
           padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(color: Colors.grey.shade50, borderRadius: BorderRadius.circular(14)),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade50,
+            borderRadius: BorderRadius.circular(14),
+          ),
           child: Icon(icon, color: const Color(0xFF08111F)),
         ),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-        subtitle: Text(time, style: const TextStyle(color: Colors.grey, fontSize: 11)),
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        subtitle: Text(
+          time,
+          style: const TextStyle(color: Colors.grey, fontSize: 11),
+        ),
         trailing: Text(
           amount,
           style: TextStyle(
@@ -1023,10 +1224,7 @@ class _Transaction extends StatelessWidget {
       ),
     );
   }
-
 }
-
-
 
 class _AIBulletText extends StatelessWidget {
   final String text;
@@ -1040,14 +1238,17 @@ class _AIBulletText extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text("⚡ ", style: TextStyle(color: Colors.amber, fontSize: 12)),
-          Expanded(child: Text(text, style: TextStyle(color: Colors.white, fontSize: 13, height: 1.4))),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(color: Colors.white, fontSize: 13, height: 1.4),
+            ),
+          ),
         ],
       ),
     );
   }
 }
-
-
 
 class _MovingAIIcon extends StatefulWidget {
   const _MovingAIIcon();
@@ -1056,26 +1257,24 @@ class _MovingAIIcon extends StatefulWidget {
   State<_MovingAIIcon> createState() => _MovingAIIconState();
 }
 
-
-
-class _MovingAIIconState extends State<_MovingAIIcon> with SingleTickerProviderStateMixin {
+class _MovingAIIconState extends State<_MovingAIIcon>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: const Duration(seconds: 3), vsync: this)..repeat();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    )..repeat();
   }
-
-
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -1086,14 +1285,18 @@ class _MovingAIIconState extends State<_MovingAIIcon> with SingleTickerProviderS
           angle: _controller.value * 2 * math.pi,
           child: Container(
             padding: const EdgeInsets.all(8),
-            decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-            child: const Icon(Icons.insights_rounded, color: Color(0xFF2575FC), size: 24),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.insights_rounded,
+              color: Color(0xFF2575FC),
+              size: 24,
+            ),
           ),
         );
       },
     );
-
   }
-
 }
-
