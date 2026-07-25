@@ -5,457 +5,384 @@ import 'package:intl/intl.dart';
 import '../../../widgets/confirm_dialog.dart';
 import '../controller/expense_transaction_controller.dart';
 
-class ExpenseTransactionPage
-    extends StatelessWidget {
+class ExpenseTransactionPage extends StatelessWidget {
   ExpenseTransactionPage({super.key});
 
-  final controller = Get.put(
-    ExpenseTransactionController(),
-  );
+  final controller = Get.put(ExpenseTransactionController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          const Color(0xFFF7F8FC),
+      backgroundColor: const Color(0xFFF7F8FC),
 
       appBar: PreferredSize(
-      preferredSize: const Size.fromHeight(90),
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-          colors: [
-            Color(0xFFC65D4A),
-            Color(0xFFB84A38),
-          ],
-        ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(28),
-            bottomRight: Radius.circular(28),
-          ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 12,
+        preferredSize: const Size.fromHeight(90),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFC65D4A), Color(0xFFB84A38)],
             ),
-            child: Row(
-              children: [
-                // BACK BUTTON
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    width: 46,
-                    height: 46,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(28),
+              bottomRight: Radius.circular(28),
+            ),
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              child: Row(
+                children: [
+                  // BACK BUTTON
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      width: 46,
+                      height: 46,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.18),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(width: 16),
+
+                  // TITLE
+                  const Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Expense Transaction",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        SizedBox(height: 4),
+
+                        Text(
+                          "SmartFin AI Voice Assistant",
+                          style: TextStyle(color: Colors.white70, fontSize: 13),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // AI ICON
+                  Container(
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.18),
-                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.white.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(18),
                     ),
                     child: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
+                      Icons.auto_awesome_rounded,
                       color: Colors.white,
-                      size: 20,
                     ),
                   ),
-                ),
-
-                const SizedBox(width: 16),
-
-                // TITLE
-                const Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Expense Transaction",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      SizedBox(height: 4),
-
-                      Text(
-                        "SmartFin AI Voice Assistant",
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // AI ICON
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: const Icon(
-                    Icons.auto_awesome_rounded,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
 
-    body: SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
-          padding:
-              const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
 
           child: Column(
             children: [
               // ====================================
               // HEADER
               // ====================================
-
               const SizedBox(height: 28),
 
               // ====================================
-              // VOICE CARD
+              // PREMIUM VOICE CARD - EXPENSE
               // ====================================
-
               Obx(
                 () => Container(
                   width: double.infinity,
-
-                  padding:
-                      const EdgeInsets.all(
-                    24,
-                  ),
-
-                  decoration:
-                      BoxDecoration(
-                    gradient:
-                        const LinearGradient(
-                      begin:
-                          Alignment.topLeft,
-                      end: Alignment
-                          .bottomRight,
-
-                      colors: [
-                        Color(0xFFC65D4A),
-                        Color(0xFFB84A38),
-                      ],
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Color(0xFFD65A4A), Color(0xFFBE4739)],
                     ),
-
-                    borderRadius:
-                        BorderRadius.circular(
-                      34,
-                    ),
-
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(
-                            0xFFC65D4A,
-                          ).withOpacity(0.35),
-
-                        blurRadius: 30,
-
-                        offset:
-                            const Offset(
-                          0,
-                          14,
-                        ),
+                        color: const Color(0xFFD65A4A).withOpacity(.25),
+                        blurRadius: 18,
+                        offset: const Offset(0, 10),
                       ),
                     ],
                   ),
-
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //==============================
+                      // HEADER
+                      //==============================
                       Row(
                         children: [
                           Container(
-                            padding:
-                                const EdgeInsets.all(
-                              14,
+                            width: 46,
+                            height: 46,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(.18),
+                              borderRadius: BorderRadius.circular(14),
                             ),
-
-                            decoration:
-                                BoxDecoration(
-                              color: Colors
-                                  .white
-                                  .withOpacity(
-                                0.15,
-                              ),
-
-                              borderRadius:
-                                  BorderRadius.circular(
-                                18,
-                              ),
-                            ),
-
                             child: const Icon(
-                              Icons
-                                  .auto_awesome_rounded,
-                              color:
-                                  Colors.white,
+                              Icons.mic_rounded,
+                              color: Colors.white,
                             ),
                           ),
 
-                          const SizedBox(
-                            width: 14,
-                          ),
+                          const SizedBox(width: 14),
 
                           const Expanded(
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment
-                                      .start,
-
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "AI Voice Expense",
-                                  style:
-                                      TextStyle(
-                                    color:
-                                        Colors.white,
-                                    fontSize:
-                                        20,
-                                    fontWeight:
-                                        FontWeight.bold,
+                                  "Voice Expense",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
 
-                                SizedBox(
-                                  height: 4,
-                                ),
+                                SizedBox(height: 3),
 
                                 Text(
-                                  "Hold button & speak your income",
-                                  style:
-                                      TextStyle(
-                                    color:
-                                        Colors.white70,
+                                  "Catat pengeluaran menggunakan suara",
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 13,
                                   ),
                                 ),
                               ],
                             ),
-                          )
+                          ),
+
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(.18),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Text(
+                              controller.isListening.value
+                                  ? "Listening"
+                                  : "Ready",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
 
-                      const SizedBox(
-                        height: 32,
+                      const SizedBox(height: 24),
+
+                      //==============================
+                      // MICROPHONE
+                      //==============================
+                      Center(
+                        child: GestureDetector(
+                          onLongPressStart: (_) async {
+                            final allowed = await controller
+                                .requestMicPermission();
+
+                            if (!allowed) {
+                              Get.dialog(
+                                AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                  ),
+                                  title: const Text("Microphone Permission"),
+                                  content: const Text(
+                                    "SmartFin membutuhkan akses microphone untuk menggunakan AI Voice Assistant.",
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      child: const Text("OK"),
+                                    ),
+                                  ],
+                                ),
+                              );
+
+                              return;
+                            }
+
+                            controller.startListening();
+                          },
+
+                          onLongPressEnd: (_) {
+                            controller.stopListening();
+                          },
+
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 250),
+
+                            width: controller.isListening.value ? 88 : 74,
+
+                            height: controller.isListening.value ? 88 : 74,
+
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+
+                              gradient: LinearGradient(
+                                colors: controller.isListening.value
+                                    ? [Colors.redAccent, Colors.red]
+                                    : [Colors.white, const Color(0xFFF8F8F8)],
+                              ),
+
+                              boxShadow: [
+                                BoxShadow(
+                                  color: controller.isListening.value
+                                      ? Colors.red.withOpacity(.35)
+                                      : Colors.white.withOpacity(.45),
+                                  blurRadius: 18,
+                                  spreadRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: Icon(
+                              controller.isListening.value
+                                  ? Icons.graphic_eq_rounded
+                                  : Icons.mic_rounded,
+                              size: 34,
+                              color: controller.isListening.value
+                                  ? Colors.white
+                                  : const Color(0xFFD65A4A),
+                            ),
+                          ),
+                        ),
                       ),
 
-                      GestureDetector(
-                        onLongPressStart:
-                            (_) async {
-                          final allowed =
-                              await controller
-                                  .requestMicPermission();
+                      const SizedBox(height: 18),
 
-                          if (!allowed) {
-                            Get.dialog(
-                              AlertDialog(
-                                shape:
-                                    RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                    22,
+                      //==============================
+                      // STATUS
+                      //==============================
+                      Center(
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 250),
+                          child: Container(
+                            key: ValueKey(controller.isListening.value),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(.15),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  controller.isListening.value
+                                      ? Icons.graphic_eq_rounded
+                                      : Icons.touch_app_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+
+                                const SizedBox(width: 8),
+
+                                Text(
+                                  controller.isListening.value
+                                      ? "AI sedang mendengarkan..."
+                                      : "Tekan & tahan untuk berbicara",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
 
-                                title:
-                                    const Text(
-                                  "Microphone Permission",
-                                ),
+                      const SizedBox(height: 18),
 
-                                content:
-                                    const Text(
-                                  "SmartFin membutuhkan akses microphone untuk menggunakan AI Voice Assistant.",
-                                ),
+                      //==============================
+                      // HASIL VOICE
+                      //==============================
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 250),
+                        child: Container(
+                          key: ValueKey(controller.speechText.value),
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(.14),
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Row(
+                                children: [
+                                  Icon(
+                                    Icons.lightbulb_outline_rounded,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
 
-                                actions: [
-                                  TextButton(
-                                    onPressed:
-                                        () {
-                                      Get.back();
-                                    },
-                                    child:
-                                        const Text(
-                                      "OK",
+                                  SizedBox(width: 8),
+
+                                  Text(
+                                    "Contoh Perintah",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
                                     ),
                                   ),
                                 ],
                               ),
-                            );
 
-                            return;
-                          }
+                              const SizedBox(height: 12),
 
-                          controller
-                              .startListening();
-                        },
-
-                        onLongPressEnd:
-                            (_) {
-                          controller
-                              .stopListening();
-                        },
-
-                        child:
-                            AnimatedContainer(
-                          duration:
-                              const Duration(
-                            milliseconds:
-                                250,
-                          ),
-
-                          width: controller
-                                  .isListening
-                                  .value
-                              ? 145
-                              : 120,
-
-                          height: controller
-                                  .isListening
-                                  .value
-                              ? 145
-                              : 120,
-
-                          decoration:
-                              BoxDecoration(
-                            shape:
-                                BoxShape
-                                    .circle,
-
-                            gradient:
-                                LinearGradient(
-                              colors: controller
-                                      .isListening
-                                      .value
-                                  ? [
-                                      Colors
-                                          .redAccent,
-                                      Colors
-                                          .red,
-                                    ]
-                                  : [
-                                      Colors
-                                          .white,
-                                      Colors
-                                          .white70,
-                                    ],
-                            ),
-
-                            boxShadow: [
-                              BoxShadow(
-                                color: controller
-                                        .isListening
-                                        .value
-                                    ? Colors.red
-                                        .withOpacity(
-                                        0.5,
-                                      )
-                                    : Colors
-                                        .white
-                                        .withOpacity(
-                                        0.5,
-                                      ),
-
-                                blurRadius:
-                                    35,
-
-                                spreadRadius:
-                                    4,
+                              Text(
+                                controller.speechText.value.isEmpty
+                                    ? "Beli makan siang lima puluh ribu menggunakan Mandiri"
+                                    : controller.speechText.value,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  height: 1.6,
+                                ),
                               ),
                             ],
-                          ),
-
-                          child: Icon(
-                            controller
-                                    .isListening
-                                    .value
-                                ? Icons
-                                    .graphic_eq_rounded
-                                : Icons
-                                    .mic_rounded,
-
-                            size: 58,
-
-                            color: controller
-                                    .isListening
-                                    .value
-                                ? Colors.white
-                                : const Color(
-                                      0xFFC65D4A,
-                                    ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(
-                        height: 24,
-                      ),
-
-                      Text(
-                        controller
-                                .isListening
-                                .value
-                            ? "Listening..."
-                            : "Hold To Speak",
-
-                        style:
-                            const TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight:
-                              FontWeight.bold,
-                        ),
-                      ),
-
-                      const SizedBox(
-                        height: 12,
-                      ),
-
-                      AnimatedSwitcher(
-                        duration:
-                            const Duration(
-                          milliseconds:
-                              300,
-                        ),
-
-                        child: Text(
-                          controller
-                                  .speechText
-                                  .value
-                                  .isEmpty
-                              ? "Contoh:\n'Beli makan siang 50000 hari ini melalui rekening Bank Mandiri'"
-                              : controller
-                                  .speechText
-                                  .value,
-
-                          key: ValueKey(
-                            controller
-                                .speechText
-                                .value,
-                          ),
-
-                          textAlign:
-                              TextAlign.center,
-
-                          style:
-                              const TextStyle(
-                            color:
-                                Colors.white,
-                            fontSize: 15,
-                            height: 1.7,
                           ),
                         ),
                       ),
@@ -469,36 +396,21 @@ class ExpenseTransactionPage
               // ====================================
               // FORM CARD
               // ====================================
-
               Container(
-                padding:
-                    const EdgeInsets.all(
-                  18,
-                ),
+                padding: const EdgeInsets.all(18),
 
-                decoration:
-                    BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.white,
 
-                  borderRadius:
-                      BorderRadius.circular(
-                    28,
-                  ),
+                  borderRadius: BorderRadius.circular(28),
 
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black
-                          .withOpacity(
-                        0.04,
-                      ),
+                      color: Colors.black.withOpacity(0.04),
 
                       blurRadius: 18,
 
-                      offset:
-                          const Offset(
-                        0,
-                        10,
-                      ),
+                      offset: const Offset(0, 10),
                     ),
                   ],
                 ),
@@ -506,75 +418,60 @@ class ExpenseTransactionPage
                 child: Column(
                   children: [
                     _modernInputCard(
-                      title:
-                          "Expense Title",
-                      hint:
-                          "Contoh: Beli makan siang",
-                      icon: Icons
-                          .edit_note_rounded,
-                      controller:
-                          controller
-                              .titleController,
+                      title: "Expense Title",
+                      hint: "Contoh: Beli makan siang",
+                      icon: Icons.edit_note_rounded,
+                      controller: controller.titleController,
                     ),
 
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    const SizedBox(height: 16),
 
                     _modernInputCard(
-                      title:
-                          "Description",
-                      hint:
-                          "Tambahkan deskripsi expense",
-                      icon:
-                          Icons.notes_rounded,
-                      controller:
-                          controller
-                              .descriptionController,
+                      title: "Description",
+                      hint: "Tambahkan deskripsi expense",
+                      icon: Icons.notes_rounded,
+                      controller: controller.descriptionController,
                       maxLines: 3,
                     ),
 
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    const SizedBox(height: 16),
 
                     // ====================================
                     // 2 COLUMN
                     // ====================================
-
                     Row(
                       children: [
                         Expanded(
-                      child: Obx(
-                        () => _modernSelector(
-                          title: "Wallet",
-                          icon: Icons.account_balance_wallet_rounded,
+                          child: Obx(
+                            () => _modernSelector(
+                              title: "Wallet",
+                              icon: Icons.account_balance_wallet_rounded,
 
-                          value: controller.walletController.wallets
+                              value:
+                                  controller.walletController.wallets
+                                      .map((w) => w.walletName)
+                                      .contains(controller.selectedWallet.value)
+                                  ? controller.selectedWallet.value
+                                  : null,
+
+                              items: controller.walletController.wallets
                                   .map((w) => w.walletName)
-                                  .contains(controller.selectedWallet.value)
-                              ? controller.selectedWallet.value
-                              : null,
+                                  .toList(),
 
-                          items: controller.walletController.wallets
-                              .map((w) => w.walletName)
-                              .toList(),
-
-                          onChanged: (v) {
-                            controller.selectedWallet.value = v ?? '';
-                          },
-                        ),
-                      ),
-                    ),
-
-                        const SizedBox(
-                          width: 12,
+                              onChanged: (v) {
+                                controller.selectedWallet.value = v ?? '';
+                              },
+                            ),
+                          ),
                         ),
 
-                       Expanded(
-                        child: Obx(
-                          () {
-                            final items = controller.categoryController.categories
+                        const SizedBox(width: 12),
+
+                        Expanded(
+                          child: Obx(() {
+                            final items = controller
+                                .categoryController
+                                .categories
                                 .map((c) => c.categoryName)
                                 .toList();
 
@@ -582,7 +479,10 @@ class ExpenseTransactionPage
                               title: "Category",
                               icon: Icons.category_rounded,
 
-                              value: items.contains(controller.selectedCategory.value)
+                              value:
+                                  items.contains(
+                                    controller.selectedCategory.value,
+                                  )
                                   ? controller.selectedCategory.value
                                   : null,
 
@@ -592,244 +492,168 @@ class ExpenseTransactionPage
                                 controller.selectedCategory.value = v ?? '';
                               },
                             );
-                          },
+                          }),
                         ),
-                      ),
                       ],
                     ),
 
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    const SizedBox(height: 16),
 
                     // ====================================
                     // AMOUNT
                     // ====================================
-
                     Container(
-                      width:
-                          double.infinity,
+                      width: double.infinity,
 
-                      padding:
-                          const EdgeInsets.all(
-                        18,
-                      ),
+                      padding: const EdgeInsets.all(18),
 
-                      decoration:
-                          BoxDecoration(
-                       gradient: LinearGradient(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
                           colors: [
                             Color(0xFFC65D4A).withOpacity(0.08),
                             Colors.white,
                           ],
                         ),
 
-                        borderRadius:
-                            BorderRadius.circular(
-                          22,
-                        ),
+                        borderRadius: BorderRadius.circular(22),
                       ),
 
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment
-                                .start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
 
                         children: [
                           const Text(
                             "Amount",
                             style: TextStyle(
-                              color:
-                                  Colors.grey,
-                              fontWeight:
-                                  FontWeight.w600,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
 
                           TextField(
-                          controller:
-                              controller.amountController,
+                            controller: controller.amountController,
 
-                          keyboardType:
-                              TextInputType.number,
+                            keyboardType: TextInputType.number,
 
-                          onChanged: (value) {
-                            value = value.replaceAll(".", "");
+                            onChanged: (value) {
+                              value = value.replaceAll(".", "");
 
-                            if (value.isEmpty) return;
+                              if (value.isEmpty) return;
 
-                            final number =
-                                int.tryParse(value);
+                              final number = int.tryParse(value);
 
-                            if (number == null) return;
+                              if (number == null) return;
 
-                            final formatted =
-                                NumberFormat.decimalPattern(
-                              'id',
-                            ).format(number);
+                              final formatted = NumberFormat.decimalPattern(
+                                'id',
+                              ).format(number);
 
-                            controller.amountController
-                                .value = TextEditingValue(
-                              text: formatted,
-                              selection:
-                                  TextSelection.collapsed(
-                                offset: formatted.length,
-                              ),
-                            );
-                          },
+                              controller.amountController.value =
+                                  TextEditingValue(
+                                    text: formatted,
+                                    selection: TextSelection.collapsed(
+                                      offset: formatted.length,
+                                    ),
+                                  );
+                            },
 
-                          style: const TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF1E293B),
-                          ),
-
-                          decoration:
-                              const InputDecoration(
-                            border: InputBorder.none,
-                            prefixText: "Rp ",
-                            prefixStyle: TextStyle(
-                              fontSize: 26,
+                            style: const TextStyle(
+                              fontSize: 32,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFFC65D4A),
+                              color: Color(0xFF1E293B),
                             ),
-                            hintText: "0",
+
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              prefixText: "Rp ",
+                              prefixStyle: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFC65D4A),
+                              ),
+                              hintText: "0",
+                            ),
                           ),
-                        )
                         ],
                       ),
                     ),
 
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    const SizedBox(height: 16),
 
                     // ====================================
                     // DATE
                     // ====================================
-
                     Obx(
                       () => InkWell(
                         onTap: () async {
-                          final picked =
-                              await showDatePicker(
-                            context:
-                                Get.context!,
-                            initialDate:
-                                controller
-                                    .selectedDate
-                                    .value,
-                            firstDate:
-                                DateTime(
-                                    2020),
-                            lastDate:
-                                DateTime(
-                                    2100),
+                          final picked = await showDatePicker(
+                            context: Get.context!,
+                            initialDate: controller.selectedDate.value,
+                            firstDate: DateTime(2020),
+                            lastDate: DateTime(2100),
                           );
 
-                          if (picked !=
-                              null) {
-                            controller
-                                .selectedDate
-                                .value = picked;
+                          if (picked != null) {
+                            controller.selectedDate.value = picked;
                           }
                         },
 
                         child: Container(
-                          padding:
-                              const EdgeInsets.symmetric(
-                            horizontal:
-                                18,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18,
                             vertical: 16,
                           ),
 
-                          decoration:
-                              BoxDecoration(
-                            color:
-                                const Color(
-                              0xFFF8FAFC,
-                            ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF8FAFC),
 
-                            borderRadius:
-                                BorderRadius.circular(
-                              22,
-                            ),
+                            borderRadius: BorderRadius.circular(22),
                           ),
 
                           child: Row(
                             children: [
                               Container(
-                                padding:
-                                    const EdgeInsets.all(
-                                  10,
-                                ),
+                                padding: const EdgeInsets.all(10),
 
-                                decoration:
-                                    BoxDecoration(
-                                  color:
-                                      const Color(
+                                decoration: BoxDecoration(
+                                  color: const Color(
                                     0xFFD4AF37,
-                                  ).withOpacity(
-                                    0.15,
-                                  ),
+                                  ).withOpacity(0.15),
 
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                    12,
-                                  ),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
 
-                                child:
-                                    const Icon(
-                                  Icons
-                                      .calendar_month_rounded,
+                                child: const Icon(
+                                  Icons.calendar_month_rounded,
                                   color: Color(0xFFC65D4A),
                                 ),
                               ),
 
-                              const SizedBox(
-                                width: 14,
-                              ),
+                              const SizedBox(width: 14),
 
                               Expanded(
-                                child:
-                                    Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment
-                                          .start,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
 
                                   children: [
                                     const Text(
                                       "Transaction Date",
-                                      style:
-                                          TextStyle(
-                                        color:
-                                            Colors.grey,
-                                        fontSize:
-                                            12,
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12,
                                       ),
                                     ),
 
-                                    const SizedBox(
-                                      height:
-                                          4,
-                                    ),
+                                    const SizedBox(height: 4),
 
                                     Text(
                                       DateFormat(
                                         'dd MMM yyyy',
-                                      ).format(
-                                        controller
-                                            .selectedDate
-                                            .value,
-                                      ),
+                                      ).format(controller.selectedDate.value),
 
-                                      style:
-                                          const TextStyle(
-                                        fontWeight:
-                                            FontWeight.bold,
-                                        fontSize:
-                                            15,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
                                       ),
                                     ),
                                   ],
@@ -841,77 +665,48 @@ class ExpenseTransactionPage
                       ),
                     ),
 
-                    const SizedBox(
-                      height: 22,
-                    ),
+                    const SizedBox(height: 22),
 
                     // ====================================
                     // BUTTONS
                     // ====================================
-
                     Row(
                       children: [
                         Expanded(
-                          child:
-                              SizedBox(
+                          child: SizedBox(
                             height: 54,
 
-                            child:
-                                OutlinedButton(
-                              style:
-                                  OutlinedButton.styleFrom(
-                                side:
-                                    BorderSide(
-                                  color:
-                                      Color(0xFFC65D4A).withOpacity(
-                                    0.4,
-                                  ),
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                side: BorderSide(
+                                  color: Color(0xFFC65D4A).withOpacity(0.4),
                                 ),
 
-                                shape:
-                                    RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                    18,
-                                  ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18),
                                 ),
                               ),
 
-                              onPressed:
-                                  () {
-                                controller
-                                    .resetForm();
+                              onPressed: () {
+                                controller.resetForm();
                               },
 
-                              child:
-                                  const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
 
                                 children: [
                                   Icon(
-                                    Icons
-                                        .refresh_rounded,
-                                    color:
-                                        Color(
-                                      0xFFC65D4A,
-                                    ),
+                                    Icons.refresh_rounded,
+                                    color: Color(0xFFC65D4A),
                                   ),
 
-                                  SizedBox(
-                                      width:
-                                          8),
+                                  SizedBox(width: 8),
 
                                   Text(
                                     "Reset",
-                                    style:
-                                        TextStyle(
-                                      color:
-                                          Color(
-                                        0xFFC65D4A,
-                                      ),
-                                      fontWeight:
-                                          FontWeight.bold,
+                                    style: TextStyle(
+                                      color: Color(0xFFC65D4A),
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
@@ -920,74 +715,56 @@ class ExpenseTransactionPage
                           ),
                         ),
 
-                        const SizedBox(
-                            width: 14),
+                        const SizedBox(width: 14),
 
                         Expanded(
                           flex: 2,
 
-                          child:
-                              SizedBox(
+                          child: SizedBox(
                             height: 54,
 
-                            child:
-                                ElevatedButton(
-                              style:
-                                  ElevatedButton.styleFrom(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
                                 backgroundColor: Color(0xFFC65D4A),
-                                elevation:
-                                    0,
+                                elevation: 0,
 
-                                shape:
-                                    RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                    18,
-                                  ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18),
                                 ),
                               ),
 
-                              onPressed:
-                                  () async {
+                              onPressed: () async {
                                 // tambahkan konfirmasi dialog sebelum save
 
                                 final confirm = await ConfirmDialog.show(
                                   title: "Simpan Transaction",
-                                  message: "Apakah kamu yakin ingin menyimpan transaksi ini?",
+                                  message:
+                                      "Apakah kamu yakin ingin menyimpan transaksi ini?",
                                   confirmText: "Simpan",
+                                  confirmColor: const Color(0xFFC65D4A)
                                 );
                                 if (confirm) {
                                   controller.saveTransaction('expense');
                                 }
                               },
 
-                              child:
-                                  const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
 
                                 children: [
                                   Icon(
-                                    Icons
-                                        .check_circle_rounded,
-                                    color:
-                                        Colors.white,
+                                    Icons.check_circle_rounded,
+                                    color: Colors.white,
                                   ),
 
-                                  SizedBox(
-                                      width:
-                                          10),
+                                  SizedBox(width: 10),
 
                                   Text(
                                     "Save Expense",
-                                    style:
-                                        TextStyle(
-                                      color:
-                                          Colors.white,
-                                      fontSize:
-                                          16,
-                                      fontWeight:
-                                          FontWeight.bold,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
@@ -1015,179 +792,239 @@ class ExpenseTransactionPage
     required String title,
     required String hint,
     required IconData icon,
-    required TextEditingController
-        controller,
+    required TextEditingController controller,
     int maxLines = 1,
   }) {
-    return Container(
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 14,
-      ),
-
-      decoration: BoxDecoration(
-        color:
-            const Color(0xFFF8FAFC),
-
-        borderRadius:
-            BorderRadius.circular(22),
-      ),
-
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-
-        children: [
-          Row(
-            children: [
-              Icon(
-                icon,
-                size: 18,
-                color:
-                    const Color(0xFFC65D4A),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        //==========================
+        // LABEL
+        //==========================
+        Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: const Color(0xFFC65D4A).withOpacity(.10),
+                borderRadius: BorderRadius.circular(12),
               ),
+              child: Icon(icon, color: const Color(0xFFC65D4A), size: 20),
+            ),
 
-              const SizedBox(width: 8),
+            const SizedBox(width: 12),
 
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight:
-                      FontWeight.w600,
-                  color: Colors.grey,
-                ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF1E293B),
+                    ),
+                  ),
+
+                  const SizedBox(height: 2),
+
+                  Text(
+                    hint,
+                    style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 12),
+
+        //==========================
+        // INPUT
+        //==========================
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: const Color(0xFFE5E7EB), width: 1.2),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(.03),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
               ),
             ],
           ),
-
-          const SizedBox(height: 8),
-
-          TextField(
+          child: TextField(
             controller: controller,
             maxLines: maxLines,
-
-            decoration:
-                InputDecoration(
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF1E293B),
+            ),
+            decoration: InputDecoration(
               border: InputBorder.none,
-              isDense: true,
+
               hintText: hint,
-              hintStyle:
-                  const TextStyle(
-                color: Colors.grey,
+
+              hintStyle: TextStyle(
+                color: Colors.grey.shade400,
+                fontWeight: FontWeight.w400,
+              ),
+
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 18,
+                vertical: maxLines > 1 ? 18 : 16,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
-
   // ====================================
   // MODERN SELECTOR
   // ====================================
 
   Widget _modernSelector({
     required String title,
-     required String? value, 
+    required String? value,
     required List<String> items,
     required IconData icon,
-    required Function(String?)
-        onChanged,
+    required Function(String?) onChanged,
   }) {
-    return Container(
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 14,
-      ),
-
-      decoration: BoxDecoration(
-        color:
-            const Color(0xFFF8FAFC),
-
-        borderRadius:
-            BorderRadius.circular(22),
-      ),
-
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-
-        children: [
-          Row(
-            children: [
-              Icon(
-                icon,
-                size: 18,
-                color:
-                    const Color(0xFFC65D4A),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        //==========================
+        // LABEL
+        //==========================
+        Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: const Color(0xFFC65D4A).withOpacity(.10),
+                borderRadius: BorderRadius.circular(12),
               ),
+              child: Icon(icon, color: const Color(0xFFC65D4A), size: 20),
+            ),
 
-              const SizedBox(width: 6),
+            const SizedBox(width: 12),
 
-              Expanded(
-                child: Text(
-                  title,
-                  overflow:
-                      TextOverflow
-                          .ellipsis,
-                  style:
-                      const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                    fontWeight:
-                        FontWeight.w600,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF1E293B),
+                    ),
                   ),
-                ),
+
+                  const SizedBox(height: 2),
+
+                  Text(
+                    "Pilih ${title.toLowerCase()}",
+                    style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 12),
+
+        //==========================
+        // DROPDOWN
+        //==========================
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: const Color(0xFFE5E7EB), width: 1.2),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(.03),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
               ),
             ],
           ),
-
-          const SizedBox(height: 6),
-
-          DropdownButtonHideUnderline(
-            child:
-                DropdownButton<String>(
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
               value: value,
-
               isExpanded: true,
 
-              icon: const Icon(
-                Icons
-                    .keyboard_arrow_down_rounded,
-                size: 18,
+              borderRadius: BorderRadius.circular(18),
+
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+
+              icon: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFC65D4A).withOpacity(.10),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: Color(0xFFC65D4A),
+                  size: 20,
+                ),
+              ),
+
+              hint: Text(
+                "Pilih $title",
+                style: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
 
               style: const TextStyle(
-                color:
-                    Color(0xFF1E293B),
-                fontSize: 14,
-                fontWeight:
-                    FontWeight.bold,
+                color: Color(0xFF1E293B),
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
               ),
 
-              items: items
-                  .map(
-                    (e) =>
-                        DropdownMenuItem(
-                      value: e,
-                      child: Text(
-                        e,
-                        overflow:
-                            TextOverflow
-                                .ellipsis,
+              items: items.map((item) {
+                return DropdownMenuItem<String>(
+                  value: item,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFC65D4A),
+                          shape: BoxShape.circle,
+                        ),
                       ),
-                    ),
-                  )
-                  .toList(),
+
+                      const SizedBox(width: 10),
+
+                      Expanded(
+                        child: Text(item, overflow: TextOverflow.ellipsis),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
 
               onChanged: onChanged,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

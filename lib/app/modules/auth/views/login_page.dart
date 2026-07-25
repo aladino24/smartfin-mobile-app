@@ -8,8 +8,7 @@ import '../controllers/login_controller.dart';
 class LoginPage extends GetView<LoginController> {
   LoginPage({super.key});
 
-    final ThemeController themeController =
-      Get.find<ThemeController>();
+  final ThemeController themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,27 +19,27 @@ class LoginPage extends GetView<LoginController> {
       // THEME COLORS
       // =========================
 
-      final Color primaryBg =
-          isDark ? const Color(0xFF08111F) : const Color(0xFFF4F7FC);
+      final Color primaryBg = isDark
+          ? const Color(0xFF08111F)
+          : const Color(0xFFF4F7FC);
 
-      final Color secondaryBg =
-          isDark ? const Color(0xFF0F1C2E) : const Color(0xFFE7EEF8);
+      final Color secondaryBg = isDark
+          ? const Color(0xFF0F1C2E)
+          : const Color(0xFFE7EEF8);
 
-      final Color glowColor =
-          isDark ? const Color(0xFF132238) : const Color(0xFFD9E7FF);
+      final Color glowColor = isDark
+          ? const Color(0xFF132238)
+          : const Color(0xFFD9E7FF);
 
       const Color accentGold = Color(0xFFD4AF37);
 
-      final Color textPrimary =
-          isDark ? Colors.white : const Color(0xFF1E293B);
+      final Color textPrimary = isDark ? Colors.white : const Color(0xFF1E293B);
 
-      final Color textSecondary =
-          isDark ? Colors.white60 : Colors.black54;
+      final Color textSecondary = isDark ? Colors.white60 : Colors.black54;
 
-      final Color cardColor =
-          isDark
-              ? Colors.white.withOpacity(0.06)
-              : Colors.white.withOpacity(0.78);
+      final Color cardColor = isDark
+          ? Colors.white.withOpacity(0.06)
+          : Colors.white.withOpacity(0.78);
 
       return Scaffold(
         backgroundColor: primaryBg,
@@ -49,15 +48,10 @@ class LoginPage extends GetView<LoginController> {
             // =========================
             // BACKGROUND GRADIENT
             // =========================
-
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    primaryBg,
-                    secondaryBg,
-                    glowColor,
-                  ],
+                  colors: [primaryBg, secondaryBg, glowColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -67,7 +61,6 @@ class LoginPage extends GetView<LoginController> {
             // =========================
             // BATIK TOP RIGHT
             // =========================
-
             Positioned(
               top: -40,
               right: -40,
@@ -75,9 +68,7 @@ class LoginPage extends GetView<LoginController> {
                 opacity: isDark ? 0.16 : 0.22,
                 child: CustomPaint(
                   size: const Size(280, 280),
-                  painter: AdvancedBatikFlowerPainter(
-                    color: accentGold,
-                  ),
+                  painter: AdvancedBatikFlowerPainter(color: accentGold),
                 ),
               ),
             ),
@@ -85,7 +76,6 @@ class LoginPage extends GetView<LoginController> {
             // =========================
             // BATIK BOTTOM LEFT
             // =========================
-
             Positioned(
               bottom: -50,
               left: -50,
@@ -95,9 +85,7 @@ class LoginPage extends GetView<LoginController> {
                   angle: math.pi,
                   child: CustomPaint(
                     size: const Size(280, 280),
-                    painter: AdvancedBatikFlowerPainter(
-                      color: accentGold,
-                    ),
+                    painter: AdvancedBatikFlowerPainter(color: accentGold),
                   ),
                 ),
               ),
@@ -106,7 +94,6 @@ class LoginPage extends GetView<LoginController> {
             // =========================
             // GLOW EFFECTS
             // =========================
-
             Positioned(
               top: 90,
               left: -70,
@@ -115,9 +102,7 @@ class LoginPage extends GetView<LoginController> {
                 height: 220,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: glowColor.withOpacity(
-                    isDark ? 0.28 : 0.5,
-                  ),
+                  color: glowColor.withOpacity(isDark ? 0.28 : 0.5),
                 ),
               ),
             ),
@@ -130,9 +115,7 @@ class LoginPage extends GetView<LoginController> {
                 height: 180,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: accentGold.withOpacity(
-                    isDark ? 0.10 : 0.06,
-                  ),
+                  color: accentGold.withOpacity(isDark ? 0.10 : 0.06),
                 ),
               ),
             ),
@@ -140,7 +123,6 @@ class LoginPage extends GetView<LoginController> {
             // =========================
             // TOGGLE THEME BUTTON
             // =========================
-
             Positioned(
               top: 55,
               right: 24,
@@ -150,22 +132,16 @@ class LoginPage extends GetView<LoginController> {
                   duration: const Duration(milliseconds: 300),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color:
-                        isDark
-                            ? Colors.white.withOpacity(0.08)
-                            : Colors.white.withOpacity(0.7),
+                    color: isDark
+                        ? Colors.white.withOpacity(0.08)
+                        : Colors.white.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color:
-                          isDark
-                              ? Colors.white10
-                              : Colors.black12,
+                      color: isDark ? Colors.white10 : Colors.black12,
                     ),
                   ),
                   child: Icon(
-                    isDark
-                        ? Icons.light_mode_rounded
-                        : Icons.dark_mode_rounded,
+                    isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
                     color: accentGold,
                   ),
                 ),
@@ -175,7 +151,6 @@ class LoginPage extends GetView<LoginController> {
             // =========================
             // CONTENT
             // =========================
-
             SafeArea(
               child: Center(
                 child: SingleChildScrollView(
@@ -186,17 +161,15 @@ class LoginPage extends GetView<LoginController> {
                       color: cardColor,
                       borderRadius: BorderRadius.circular(28),
                       border: Border.all(
-                        color:
-                            isDark
-                                ? Colors.white.withOpacity(0.1)
-                                : Colors.black.withOpacity(0.05),
+                        color: isDark
+                            ? Colors.white.withOpacity(0.1)
+                            : Colors.black.withOpacity(0.05),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color:
-                              isDark
-                                  ? Colors.black.withOpacity(0.25)
-                                  : Colors.black.withOpacity(0.08),
+                          color: isDark
+                              ? Colors.black.withOpacity(0.25)
+                              : Colors.black.withOpacity(0.08),
                           blurRadius: 30,
                           offset: const Offset(0, 15),
                         ),
@@ -208,33 +181,37 @@ class LoginPage extends GetView<LoginController> {
                         // =========================
                         // LOGO
                         // =========================
-
                         Container(
-                          width: 85,
-                          height: 85,
+                          width: 90,
+                          height: 90,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: const LinearGradient(
-                              colors: [
-                                accentGold,
-                                Color(0xFFF4E2A1),
-                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [Color(0xFFFFD54F), Color(0xFFD4AF37)],
                             ),
                             boxShadow: [
                               BoxShadow(
                                 color: accentGold.withOpacity(0.35),
-                                blurRadius: 25,
-                                spreadRadius: 2,
+                                blurRadius: 20,
+                                offset: const Offset(0, 8),
                               ),
                             ],
                           ),
-                          child: Icon(
-                            Icons.account_balance_wallet_rounded,
-                            size: 42,
-                            color:
-                                isDark
-                                    ? primaryBg
-                                    : const Color(0xFF1E293B),
+                          child: Container(
+                            margin: const EdgeInsets.all(8),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Image.asset(
+                                'assets/images/logo-fx.png',
+                                fit: BoxFit.contain,
+                              ),
+                            ),
                           ),
                         ),
 
@@ -254,10 +231,7 @@ class LoginPage extends GetView<LoginController> {
 
                         Text(
                           "Financial Management Platform",
-                          style: TextStyle(
-                            color: textSecondary,
-                            fontSize: 14,
-                          ),
+                          style: TextStyle(color: textSecondary, fontSize: 14),
                         ),
 
                         const SizedBox(height: 36),
@@ -265,48 +239,36 @@ class LoginPage extends GetView<LoginController> {
                         // =========================
                         // EMAIL FIELD
                         // =========================
-
                         TextField(
-                          onChanged: (v) =>
-                              controller.email.value = v,
-                          style: TextStyle(
-                            color: textPrimary,
-                          ),
+                          onChanged: (v) => controller.email.value = v,
+                          style: TextStyle(color: textPrimary),
                           decoration: InputDecoration(
                             hintText: "Email atau Username",
                             hintStyle: TextStyle(
-                              color:
-                                  isDark
-                                      ? Colors.white38
-                                      : Colors.black38,
+                              color: isDark ? Colors.white38 : Colors.black38,
                             ),
                             prefixIcon: const Icon(
                               Icons.email_outlined,
                               color: accentGold,
                             ),
                             filled: true,
-                            fillColor:
-                                isDark
-                                    ? Colors.white.withOpacity(0.05)
-                                    : Colors.black.withOpacity(0.03),
+                            fillColor: isDark
+                                ? Colors.white.withOpacity(0.05)
+                                : Colors.black.withOpacity(0.03),
                             border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide(
-                                color:
-                                    isDark
-                                        ? Colors.white.withOpacity(0.08)
-                                        : Colors.black.withOpacity(0.05),
+                                color: isDark
+                                    ? Colors.white.withOpacity(0.08)
+                                    : Colors.black.withOpacity(0.05),
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: const BorderSide(
                                 color: accentGold,
                                 width: 1.5,
@@ -320,22 +282,14 @@ class LoginPage extends GetView<LoginController> {
                         // =========================
                         // PASSWORD FIELD
                         // =========================
-
                         TextField(
-                          obscureText:
-                              controller.obscurePassword.value,
-                          onChanged: (v) =>
-                              controller.password.value = v,
-                          style: TextStyle(
-                            color: textPrimary,
-                          ),
+                          obscureText: controller.obscurePassword.value,
+                          onChanged: (v) => controller.password.value = v,
+                          style: TextStyle(color: textPrimary),
                           decoration: InputDecoration(
                             hintText: "Password",
                             hintStyle: TextStyle(
-                              color:
-                                  isDark
-                                      ? Colors.white38
-                                      : Colors.black38,
+                              color: isDark ? Colors.white38 : Colors.black38,
                             ),
                             prefixIcon: const Icon(
                               Icons.lock_outline,
@@ -346,37 +300,28 @@ class LoginPage extends GetView<LoginController> {
                                 controller.obscurePassword.value
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color:
-                                    isDark
-                                        ? Colors.white54
-                                        : Colors.black45,
+                                color: isDark ? Colors.white54 : Colors.black45,
                               ),
-                              onPressed:
-                                  controller.togglePassword,
+                              onPressed: controller.togglePassword,
                             ),
                             filled: true,
-                            fillColor:
-                                isDark
-                                    ? Colors.white.withOpacity(0.05)
-                                    : Colors.black.withOpacity(0.03),
+                            fillColor: isDark
+                                ? Colors.white.withOpacity(0.05)
+                                : Colors.black.withOpacity(0.03),
                             border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide(
-                                color:
-                                    isDark
-                                        ? Colors.white.withOpacity(0.08)
-                                        : Colors.black.withOpacity(0.05),
+                                color: isDark
+                                    ? Colors.white.withOpacity(0.08)
+                                    : Colors.black.withOpacity(0.05),
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: const BorderSide(
                                 color: accentGold,
                                 width: 1.5,
@@ -390,49 +335,39 @@ class LoginPage extends GetView<LoginController> {
                         // =========================
                         // LOGIN BUTTON
                         // =========================
-
                         SizedBox(
                           width: double.infinity,
                           height: 56,
                           child: ElevatedButton(
-                            onPressed:
-                                controller.isLoading.value
-                                    ? null
-                                    : controller.login,
+                            onPressed: controller.isLoading.value
+                                ? null
+                                : controller.login,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: accentGold,
-                              foregroundColor:
-                                  const Color(0xFF08111F),
+                              foregroundColor: const Color(0xFF08111F),
                               elevation: 10,
-                              shadowColor:
-                                  accentGold.withOpacity(0.5),
+                              shadowColor: accentGold.withOpacity(0.5),
                               shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(16),
+                                borderRadius: BorderRadius.circular(16),
                               ),
                             ),
-                            child:
-                                controller.isLoading.value
-                                    ? const SizedBox(
-                                      width: 22,
-                                      height: 22,
-                                      child:
-                                          CircularProgressIndicator(
-                                            strokeWidth: 2.5,
-                                            color: Color(
-                                              0xFF08111F,
-                                            ),
-                                          ),
-                                    )
-                                    : const Text(
-                                      "LOGIN",
-                                      style: TextStyle(
-                                        fontWeight:
-                                            FontWeight.bold,
-                                        fontSize: 16,
-                                        letterSpacing: 1,
-                                      ),
+                            child: controller.isLoading.value
+                                ? const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2.5,
+                                      color: Color(0xFF08111F),
                                     ),
+                                  )
+                                : const Text(
+                                    "LOGIN",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
                           ),
                         ),
 
@@ -441,14 +376,11 @@ class LoginPage extends GetView<LoginController> {
                         // =========================
                         // FORGOT PASSWORD
                         // =========================
-
                         TextButton(
                           onPressed: () {},
                           child: Text(
                             "Forgot Password?",
-                            style: TextStyle(
-                              color: textSecondary,
-                            ),
+                            style: TextStyle(color: textSecondary),
                           ),
                         ),
 
@@ -457,18 +389,13 @@ class LoginPage extends GetView<LoginController> {
                         // =========================
                         // REGISTER
                         // =========================
-
                         Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               "Belum memiliki akun?",
                               style: TextStyle(
-                                color:
-                                    isDark
-                                        ? Colors.white70
-                                        : Colors.black54,
+                                color: isDark ? Colors.white70 : Colors.black54,
                                 fontSize: 13,
                               ),
                             ),
@@ -476,23 +403,18 @@ class LoginPage extends GetView<LoginController> {
                             const SizedBox(width: 6),
 
                             InkWell(
-                              borderRadius:
-                                  BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10),
                               onTap: () {
                                 Get.toNamed('/register');
                               },
                               child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 5,
-                                    ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 5,
+                                ),
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(10),
-                                  color: accentGold.withOpacity(
-                                    0.12,
-                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: accentGold.withOpacity(0.12),
                                 ),
                                 child: const Text(
                                   "Register",
@@ -526,22 +448,16 @@ class LoginPage extends GetView<LoginController> {
 class AdvancedBatikFlowerPainter extends CustomPainter {
   final Color color;
 
-  AdvancedBatikFlowerPainter({
-    required this.color,
-  });
+  AdvancedBatikFlowerPainter({required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint =
-        Paint()
-          ..color = color.withOpacity(0.95)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.2;
+    final paint = Paint()
+      ..color = color.withOpacity(0.95)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.2;
 
-    final center = Offset(
-      size.width / 2,
-      size.height / 2,
-    );
+    final center = Offset(size.width / 2, size.height / 2);
 
     for (int i = 0; i < 8; i++) {
       final angle = (i * 45) * math.pi / 180;
@@ -567,11 +483,7 @@ class AdvancedBatikFlowerPainter extends CustomPainter {
       canvas.drawPath(path, paint);
     }
 
-    canvas.drawCircle(
-      center,
-      18,
-      paint,
-    );
+    canvas.drawCircle(center, 18, paint);
   }
 
   @override

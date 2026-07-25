@@ -17,31 +17,11 @@ void main() async {
 
   HttpOverrides.global = MyHttpOverrides();
 
-  final box = GetStorage();
-
-  // =========================
-  // CHECK TOKEN
-  // =========================
-
-  final String? token = box.read('token');
-
-  final bool isLoggedIn =
-      token != null && token.isNotEmpty;
-
-  runApp(
-    MyApp(
-      isLoggedIn: isLoggedIn,
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
-
-  const MyApp({
-    super.key,
-    required this.isLoggedIn,
-  });
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +31,12 @@ class MyApp extends StatelessWidget {
     );
 
     return GetMaterialApp(
-      initialBinding: InitialBinding(),
       debugShowCheckedModeBanner: false,
       title: 'SmartFin',
+      initialBinding: InitialBinding(),
 
-      initialRoute:
-          isLoggedIn
-              ? AppRoutes.main
-              : AppRoutes.login,
+      /// Selalu buka Splash terlebih dahulu
+      initialRoute: AppRoutes.splash,
 
       getPages: AppPages.pages,
     );

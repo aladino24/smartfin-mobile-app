@@ -333,23 +333,12 @@ class _DashboardPageState extends State<DashboardPage> {
           }),
           // Mini Sparkline Preview
           Obx(() {
-
-            final spots = controller.cashflowChart
-                .asMap()
-                .entries
-                .map((entry) {
-
-                  return FlSpot(
-                    entry.key.toDouble(),
-                    entry.value.income / 1000000,
-                  );
-
-                }).toList();
+            final spots = controller.cashflowChart.asMap().entries.map((entry) {
+              return FlSpot(entry.key.toDouble(), entry.value.income / 1000000);
+            }).toList();
 
             if (spots.isEmpty) {
-              return const SizedBox(
-                height: 50,
-              );
+              return const SizedBox(height: 50);
             }
 
             return SizedBox(
@@ -360,7 +349,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   titlesData: const FlTitlesData(show: false),
                   borderData: FlBorderData(show: false),
                   lineBarsData: [
-
                     LineChartBarData(
                       spots: spots,
                       isCurved: true,
@@ -372,13 +360,11 @@ class _DashboardPageState extends State<DashboardPage> {
                         show: true,
                         color: gold.withOpacity(.1),
                       ),
-                    )
-
+                    ),
                   ],
                 ),
               ),
             );
-
           }),
           const SizedBox(height: 16),
           Row(
@@ -536,66 +522,62 @@ class _DashboardPageState extends State<DashboardPage> {
 
   // =====================================================
   Widget _buildWalletSummary() {
-  return _sectionCard(
-    title: "Wallet Summary",
-    child: Obx(() {
-      if (controller.walletSummary.isEmpty) {
-        return const Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Text(
-              "No Wallet Available",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ),
-        );
-      }
-
-      return Column(
-        children: controller.walletSummary.take(5).map((wallet) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: _WalletRow(
-              wallet.walletName,
-              controller.formatRupiah(wallet.balance),
-              _getWalletIcon(wallet.icon),
-              Color(
-                int.parse(
-                  wallet.color.replaceFirst("#", "0xFF"),
-                ),
+    return _sectionCard(
+      title: "Wallet Summary",
+      child: Obx(() {
+        if (controller.walletSummary.isEmpty) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                "No Wallet Available",
+                style: TextStyle(color: Colors.grey),
               ),
             ),
           );
-        }).toList(),
-      );
-    }),
-  );
-}
+        }
 
-IconData _getWalletIcon(String? icon) {
-  switch (icon) {
-    case "payments":
-      return Icons.payments_rounded;
-
-    case "account_balance":
-      return Icons.account_balance_rounded;
-
-    case "account_balance_wallet":
-      return Icons.account_balance_wallet_rounded;
-
-    case "credit_card":
-      return Icons.credit_card_rounded;
-
-    case "savings":
-      return Icons.savings_rounded;
-
-    case "wallet":
-      return Icons.wallet_rounded;
-
-    default:
-      return Icons.account_balance_wallet_rounded;
+        return Column(
+          children: controller.walletSummary.take(5).map((wallet) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: _WalletRow(
+                wallet.walletName,
+                controller.formatRupiah(wallet.balance),
+                _getWalletIcon(wallet.icon),
+                Color(int.parse(wallet.color.replaceFirst("#", "0xFF"))),
+              ),
+            );
+          }).toList(),
+        );
+      }),
+    );
   }
-}
+
+  IconData _getWalletIcon(String? icon) {
+    switch (icon) {
+      case "payments":
+        return Icons.payments_rounded;
+
+      case "account_balance":
+        return Icons.account_balance_rounded;
+
+      case "account_balance_wallet":
+        return Icons.account_balance_wallet_rounded;
+
+      case "credit_card":
+        return Icons.credit_card_rounded;
+
+      case "savings":
+        return Icons.savings_rounded;
+
+      case "wallet":
+        return Icons.wallet_rounded;
+
+      default:
+        return Icons.account_balance_wallet_rounded;
+    }
+  }
 
   // =====================================================
   Widget _buildAnalytics() {
@@ -732,6 +714,27 @@ IconData _getWalletIcon(String? icon) {
 
     return _sectionCard(
       title: "Recent Transactions",
+      action: TextButton(
+        onPressed: () {
+          Get.toNamed('/transaction-history');
+        },
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+          minimumSize: const Size(0, 32),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+        child: const Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "See All",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,color: Colors.blueAccent),
+            ),
+            SizedBox(width: 4),
+            Icon(Icons.arrow_forward_ios, size: 12),
+          ],
+        ),
+      ),
       child: Obx(() {
         if (controller.isLoadingTransaction.value) {
           return const Center(child: CircularProgressIndicator());
@@ -757,7 +760,6 @@ IconData _getWalletIcon(String? icon) {
                 ? const Color(0xFF2EC4B6).withOpacity(0.12)
                 : const Color(0xFFE71D36).withOpacity(0.12);
 
-            /// 🎯 ICON
             final icon = isIncome
                 ? Icons.trending_up_rounded
                 : Icons.trending_down_rounded;
@@ -778,7 +780,7 @@ IconData _getWalletIcon(String? icon) {
               ),
               child: Row(
                 children: [
-                  /// ICON CIRCLE
+                  /// ICON
                   Container(
                     width: 44,
                     height: 44,
@@ -791,7 +793,7 @@ IconData _getWalletIcon(String? icon) {
 
                   const SizedBox(width: 12),
 
-                  /// TITLE + DATE
+                  /// TITLE & DATE
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -951,7 +953,11 @@ IconData _getWalletIcon(String? icon) {
   }
 
   // =====================================================
-  Widget _sectionCard({required String title, required Widget child}) {
+  Widget _sectionCard({
+    required String title,
+    required Widget child,
+    Widget? action, // opsional
+  }) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -968,13 +974,20 @@ IconData _getWalletIcon(String? icon) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF08111F),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF08111F),
+                  ),
+                ),
+              ),
+              if (action != null) action!,
+            ],
           ),
           const SizedBox(height: 16),
           child,
