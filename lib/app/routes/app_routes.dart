@@ -10,4 +10,6 @@ class AppRoutes {
   static const transactionHistory = '/transaction-history';
   static const knowledge = '/knowledge';
   static const reminder = '/reminder';
+  static const news = '/news';
+  static const detailNews = '/news/detail';
 }

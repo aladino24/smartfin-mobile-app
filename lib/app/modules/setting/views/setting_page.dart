@@ -75,7 +75,9 @@ class SettingsPage extends StatelessWidget {
               icon: Icons.newspaper_rounded,
               title: "Latest Information",
               subtitle: "Update & news aplikasi",
-              onTap: () {},
+              onTap: () {
+                Get.toNamed('/news');
+              },
             ),
 
             // Reminder

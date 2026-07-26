@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:smartfin_mobile_app/app/modules/news/models/newsresponse_model.dart';
 
 import '../modules/master/models/category_model.dart';
 import '../modules/transaction/model/create_transaction_response.dart';
@@ -7,12 +8,10 @@ import '../modules/transaction/model/voice_transaction_model.dart';
 import '../modules/master/models/wallet_model.dart';
 
 class ApiService {
-  final String baseUrl = "https://unsaved-broaden-bazooka.ngrok-free.dev/api/v1";
+  final String baseUrl =
+      "https://unsaved-broaden-bazooka.ngrok-free.dev/api/v1";
 
-  Future<Map<String, dynamic>> login(
-    String email,
-    String password,
-  ) async {
+  Future<Map<String, dynamic>> login(String email, String password) async {
     final url = Uri.parse("$baseUrl/login");
 
     final response = await http.post(
@@ -21,12 +20,8 @@ class ApiService {
         "Content-Type": "application/json",
         "Accept": "application/json",
       },
-      body: jsonEncode({
-        "email": email,
-        "password": password,
-      }),
+      body: jsonEncode({"email": email, "password": password}),
     );
-
 
     final data = jsonDecode(response.body);
 
@@ -37,43 +32,42 @@ class ApiService {
     }
   }
 
-
   Future<void> logout(String token) async {
-      final url = Uri.parse("$baseUrl/logout");
+    final url = Uri.parse("$baseUrl/logout");
 
-      final response = await http.post(
-        url,
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer $token",
-        },
-      );
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $token",
+      },
+    );
 
-      if (response.statusCode != 200) {
-        throw Exception("Logout gagal");
-      }
+    if (response.statusCode != 200) {
+      throw Exception("Logout gagal");
     }
+  }
 
-    Future<Map<String, dynamic>> getTransactions(String token) async {
-      final url = Uri.parse("$baseUrl/transactions");
+  Future<Map<String, dynamic>> getTransactions(String token) async {
+    final url = Uri.parse("$baseUrl/transactions");
 
-      final response = await http.get(
-        url,
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer $token",
-        },
-      );
+    final response = await http.get(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $token",
+      },
+    );
 
-      final data = jsonDecode(response.body);
+    final data = jsonDecode(response.body);
 
-      if (response.statusCode == 200) {
-        return data;
-      } else {
-        throw Exception(data["message"] ?? "Failed load transactions");
-      }
+    if (response.statusCode == 200) {
+      return data;
+    } else {
+      throw Exception(data["message"] ?? "Failed load transactions");
+    }
   }
 
   Future<Map<String, dynamic>> register(
@@ -100,105 +94,76 @@ class ApiService {
 
     final data = jsonDecode(response.body);
 
-    if (response.statusCode == 200 ||
-        response.statusCode == 201) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return data;
     } else {
-      throw Exception(
-        data["message"] ?? "Register failed",
-      );
+      throw Exception(data["message"] ?? "Register failed");
     }
   }
 
-Future<VoiceTransactionResponse>
-  parseVoice(String text, String token, String tipe) async {
+  Future<VoiceTransactionResponse> parseVoice(
+    String text,
+    String token,
+    String tipe,
+  ) async {
     final response = await http.post(
       Uri.parse("$baseUrl/transactions/voice"),
 
       headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $token",
       },
 
-      body: jsonEncode({
-        "text": text,
-        'tipe': tipe,
-      }),
+      body: jsonEncode({"text": text, 'tipe': tipe}),
     );
 
     if (response.statusCode == 200) {
-      final json =
-          jsonDecode(response.body);
+      final json = jsonDecode(response.body);
 
-      return VoiceTransactionResponse
-          .fromJson(json);
+      return VoiceTransactionResponse.fromJson(json);
     } else {
-      throw Exception(
-        'Failed parse voice',
-      );
+      throw Exception('Failed parse voice');
     }
   }
 
   // wallet
-  Future<List<WalletModel>> getWallets(
-    String token,
-  ) async {
+  Future<List<WalletModel>> getWallets(String token) async {
     final response = await http.get(
       Uri.parse("$baseUrl/wallets"),
-      headers: {
-        "Accept": "application/json",
-        "Authorization":
-            "Bearer $token",
-      },
+      headers: {"Accept": "application/json", "Authorization": "Bearer $token"},
     );
 
     if (response.statusCode == 200) {
-      final json = jsonDecode(
-        response.body,
-      );
+      final json = jsonDecode(response.body);
 
-      final result =
-          WalletResponse.fromJson(json);
+      final result = WalletResponse.fromJson(json);
 
       return result.data;
     } else {
-      throw Exception(
-        'Failed load wallets',
-      );
+      throw Exception('Failed load wallets');
     }
   }
 
   // category
-  Future<List<CategoryModel>> getCategories(
-    String token,
-  ) async {
+  Future<List<CategoryModel>> getCategories(String token) async {
     final response = await http.get(
       Uri.parse("$baseUrl/categories"),
-      headers: {
-        "Accept": "application/json",
-        "Authorization":
-            "Bearer $token",
-      },
+      headers: {"Accept": "application/json", "Authorization": "Bearer $token"},
     );
 
     if (response.statusCode == 200) {
-      final json = jsonDecode(
-        response.body,
-      );
+      final json = jsonDecode(response.body);
 
-      final result =
-          CategoryResponse.fromJson(json);
+      final result = CategoryResponse.fromJson(json);
 
       return result.data;
     } else {
-      throw Exception(
-        'Failed load categories',
-      );
+      throw Exception('Failed load categories');
     }
   }
 
-   Future<CreateTransactionResponse> createTransaction(
+  Future<CreateTransactionResponse> createTransaction(
     Map<String, dynamic> body,
     String? token,
   ) async {
@@ -224,23 +189,41 @@ Future<VoiceTransactionResponse>
         );
       }
     } catch (e) {
-      return CreateTransactionResponse(
-        success: false,
-        message: e.toString(),
-      );
+      return CreateTransactionResponse(success: false, message: e.toString());
     }
   }
 
   Future<Map<String, dynamic>> getDashboard(String token) async {
-  final response = await http.get(
-    Uri.parse("$baseUrl/dashboard"),
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token",
-    },
-  );
+    final response = await http.get(
+      Uri.parse("$baseUrl/dashboard"),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+      },
+    );
 
-  return jsonDecode(response.body);
-}
+    return jsonDecode(response.body);
+  }
+
+  Future<List<NewsModel>> getNews(String token) async {
+    final response = await http.get(
+      Uri.parse("$baseUrl/news"),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+
+      final result = NewsResponse.fromJson(json);
+
+      return result.data?.data ?? [];
+    } else {
+      throw Exception("Failed load news");
+    }
+  }
 }

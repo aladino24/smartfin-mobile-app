@@ -1,6 +1,8 @@
 
 import 'package:get/get.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:smartfin_mobile_app/app/modules/news/views/detail_news_page.dart';
+import 'package:smartfin_mobile_app/app/modules/news/views/news_page.dart';
 import 'package:smartfin_mobile_app/app/modules/setting/views/about_page.dart';
 import 'package:smartfin_mobile_app/app/modules/splash/views/splash_view.dart';
 import 'package:smartfin_mobile_app/app/modules/transaction/views/transaction_history_page.dart';
@@ -74,6 +76,16 @@ class AppPages {
     GetPage(
       name: AppRoutes.transactionHistory,
       page: () => TransactionHistoryPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.news,
+      page: () => NewsPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.detailNews,
+      page: () => DetailNewsPage(),
     ),
   ];
 }

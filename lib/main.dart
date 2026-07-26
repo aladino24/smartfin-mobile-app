@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:smartfin_mobile_app/app/bindings/initial_bindings.dart';
 
 import 'app/config/http_override.dart';
@@ -12,6 +13,7 @@ import 'app/routes/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+   await initializeDateFormatting('id_ID', null);
 
   await GetStorage.init();
 
